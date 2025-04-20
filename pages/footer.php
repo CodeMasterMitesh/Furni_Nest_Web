@@ -5,7 +5,7 @@
                     <div class="row footer-widget-wrapper">
                         <div class="col-lg-3 col-md-3 col-sm-6 footer-widget">
                             <div class="footer-widget__logo mb-20">
-                                <a href="#"><img src="assets/images/logo/logo.svg" alt=""></a>
+                                <a href="#"><img class="w-100" src="assets/images/logo/logo.svg" alt=""></a>
                             </div>
                             <ul class="footer-widget__list">
                                 <li><i class="icon_pin"></i> FurniNest, Ahmedabad,Gujarat,382345</li>
