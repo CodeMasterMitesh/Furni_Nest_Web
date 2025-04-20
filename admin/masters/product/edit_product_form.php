@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $size = $_POST['size'];
   $color = $_POST['color'];
   $category = $_POST['category_id'];
-  $details = $_POST['description'];
+  $details = mysqli_escape_string($conn,$_POST['description']);
 
   // Update product
   $updateQuery = "UPDATE products SET 

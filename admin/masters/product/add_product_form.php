@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $size = $_POST['size'];
   $color = $_POST['color'];
   $category = $_POST['category_id'];
-  $details = $_POST['description'];
+  $details = mysqli_escape_string($conn,$_POST['description']);
 
   // Insert product data
   $sql = "INSERT INTO products (name, title, price, sku, small_description, tag, size, color, category_id, description)

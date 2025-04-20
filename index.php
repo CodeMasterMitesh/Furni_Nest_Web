@@ -1,5 +1,12 @@
+<?php 
+include('config/conn.php'); 
+// print_r($_SESSION);
+if(!isset($_SESSION['customer_logged_in'])){
+    $_SESSION['customer_logged_in'] = false;
+}
+?>
 <!DOCTYPE html>
-<html class="no-js" lang="zxx">
+<html class="no-js" lang="en">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>FurniNest &#8211; Minimalis Furniture eCommerce</title>
@@ -8,20 +15,31 @@
     <!-- Favicon -->
     <link rel="icon" href="assets/images/favicon.ico">
 
-    <!-- CSS
-            ============================================ -->
+    <!-- CSS============================================ -->
 
     <link rel="stylesheet" href="assets/css/vendor/vendor.min.css">
     <link rel="stylesheet" href="assets/css/plugins/plugins.min.css">
 
     <!-- Main Style CSS -->
     <link rel="stylesheet" href="assets/css/style.min.css">
-
-
+<style>
+    @media screen and (max-width: 426px) {
+        .hcenter {
+            justify-content:center !important;
+        }
+        
+    }
+    @media screen and (min-width: 426px) and (max-width: 768px) {
+        .mmenu{
+            display: block !important;
+        }
+        
+    }
+    
+</style>
 </head>
-
 <body class="">
-
+<div id="toast" style="position: fixed; bottom: 30px; right: 30px; background-color: #333; color: #fff; padding: 10px 20px; border-radius: 4px; opacity: 0; transition: opacity 0.5s; z-index: 9999;"></div>
     <!--====================  header area ====================-->
     <div class="header-area header-area--default">
 
@@ -30,7 +48,7 @@
             <div class="container-fluid container-fluid--cp-100">
                 <div class="row align-items-center">
 
-                    <div class="col-lg-3 col-lg-3 col-6">
+                    <div class="col-lg-3 col-lg-3 col-md-6 col-sm-12">
                         <div class="logo text-start">
                             <a href="#"><img class="w-100" src="assets/images/logo/logo.svg" alt=""></a>
                             <!-- <a class="navbar-brand fs-3" href="dashboard.php">FurniNest</a> -->
@@ -44,26 +62,11 @@
                                 <ul class="justify-content-center">
                                     <li class="has-children has-children--multilevel-submenu">
                                         <a href="/"><span>Home</span></a>
-                                        <!-- <ul class="submenu"> -->
-                                            <!-- <li><a href="index.php"><span>Home V1 – Default</span></a></li> -->
-                                            <!-- <li><a href="index-7.php"><span>Home V2 – Boxed</span></a></li>
-                                            <li><a href="index-8.php"><span>Home V3 – Carousel</span></a></li>
-                                            <li><a href="index-11.php"><span>Home V4 – Categories</span></a></li>
-                                            <li><a href="index-10.php"><span>Home V5 – Collection</span></a></li>
-                                            <li><a href="index-5.php"><span>Home V6 – Full Width</span></a></li>
-                                            <li><a href="index-4.php"><span>Home V7 – Left Sidebar</span></a></li>
-                                            <li><a href="index-3.php"><span>Home V8 – Metro</span></a></li>
-                                            <li><a href="index-2.php"><span>Home V9 – Minimal</span></a></li>
-                                            <li><a href="index-6.php"><span>Home V10 – Parallax</span></a></li>
-                                            <li><a href="index-12.php"><span>Home V11 – Video Feature</span></a></li>
-                                            <li><a href="index-9.php"><span>Home V12 – Minimal 02 Feature</span></a></li>
-                                            <li><a href="index-13.php"><span>Home V13 – Minimal 03 Feature</span></a></li> -->
-                                        <!-- </ul> -->
                                     </li>
                                     <li class="has-children">
-                                        <a href="#"><span>Shop</span></a>
+                                        <a href="index.php?p=shop-4-column"><span>Shop</span></a>
                                         <!-- mega menu -->
-                                        <ul class="megamenu megamenu--mega">
+                                        <!-- <ul class="megamenu megamenu--mega">
                                             <li>
                                                 <h2 class="page-list-title">Shop Pages</h2>
                                                 <ul>
@@ -106,44 +109,57 @@
                                             <li>
 
                                             </li>
-                                        </ul>
+                                        </ul> -->
                                     </li>
                                     <li class="has-children has-children--multilevel-submenu">
 
-                                        <a href="#"><span>Pages</span></a>
+                                        <a href="index.php?p=about-us"><span>About Us</span></a>
                                         <!-- multilevel submenu -->
-                                        <ul class="submenu">
+                                        <!-- <ul class="submenu">
                                             <li><a href="index.php?p=about-us"><span>About Us</span></a></li>
                                             <li><a href="index.php?p=contact-us"><span>Contact</span></a></li>
                                             <li><a href="index.php?p=faq"><span>FAQ Pages</span></a></li>
                                             <li><a href="index.php?p=coming-soon"><span>Coming Soon</span></a></li>
                                             <li><a href="index.php?p=404-page"><span>404 Page</span></a></li>
-                                        </ul>
+                                        </ul> -->
                                     </li>
                                     <li class="has-children has-children--multilevel-submenu">
-                                        <a href="#"><span>Blog</span></a>
+                                        <a href="index.php?p=contact-us"><span>Contact Us</span></a>
+                                    </li>
+                                    <li class="has-children has-children--multilevel-submenu">
+                                        <a href="index.php?p=blog-listing"><span>Blog</span></a>
                                         <!-- multilevel submenu -->
-                                        <ul class="submenu">
+                                        <!-- <ul class="submenu">
                                             <li><a href="index.php?p=blog-grid"><span>Blog Grid</span></a></li>
                                             <li><a href="index.php?p=blog-listing"><span>Blog List</span></a></li>
                                             <li><a href="index.php?p=blog-masonry"><span>Blog Masonry</span></a></li>
                                             <li><a href="index.php?p=blog-left-sidebar"><span>Blog Sidebar</span></a></li>
                                             <li><a href="index.php?p=single-blog-post"><span>Single Post V1</span></a></li>
                                             <li><a href="index.php?p=single-blog-post-2"><span>Single Post V2</span></a></li>
-                                        </ul>
+                                        </ul> -->
                                     </li>
 
                                 </ul>
                             </nav>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-lg-3 col-6">
-                        <div class="header-right-side text-end">
-                            <div class="header-right-items  d-none d-md-block">
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                    <i class="icon-user"></i>
-                                </a>
-                            </div>
+                    <div class="col-lg-3 col-lg-3 col-md-6 col-sm-12">
+                        <div class="header-right-side align-items-center hcenter text-end">
+                            <?php if($_SESSION['customer_logged_in']){
+                                 if(isset($_SESSION['user_id'])){
+                                    $user_id = $_SESSION['user_id'];
+                                    $sql = "SELECT * FROM users WHERE id='$user_id'";
+                                    $res = mysqli_query($conn, $sql);
+                                    $row = mysqli_fetch_assoc($res);
+                                    echo '<a href="index.php?p=my-account" class="header-cart">Welcome '.$row['username'].'</a>';
+                                } 
+                            }else{
+                                echo '<div class="header-right-items d-none d-md-block">
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        <i class="icon-user"></i>
+                                    </a>
+                                </div>';
+                            }?>
                             <div class="header-right-items d-none d-md-block">
                                 <a href="index.php?p=wishlist" class="header-cart">
                                     <i class="icon-heart"></i>
@@ -154,7 +170,7 @@
                             <div class="header-right-items">
                                 <a href="#miniCart" class=" header-cart minicart-btn toolbar-btn header-icon">
                                     <i class="icon-bag2"></i>
-                                    <span class="item-counter">3</span>
+                                    <span class="item-counter" id="cart-count"></span>
                                 </a>
                             </div>
                             <div class="header-right-items d-block d-md-none">
@@ -162,7 +178,7 @@
                                     <i class="icon-magnifier"></i>
                                 </a>
                             </div>
-                            <div class="header-right-items">
+                            <div class="header-right-items mmenu d-none">
                                 <a href="javascript:void(0)" class="mobile-navigation-icon" id="mobile-menu-trigger">
                                     <i class="icon-menu"></i>
                                 </a>
@@ -319,41 +335,39 @@
                     </div>
                     <div class="tab-content content-modal-box">
                         <div class="tab-pane fade show active" id="tab_list_06" role="tabpanel">
-                            <form action="#" class="account-form-box">
+                            <form id="loginForm" method="POST" class="account-form-box">
                                 <h6>Login your account</h6>
                                 <div class="single-input">
-                                    <input type="text" placeholder="Username">
+                                    <input type="text" name="username" placeholder="Username or Email" required>
                                 </div>
                                 <div class="single-input">
-                                    <input type="password" placeholder="Password">
+                                    <input type="password" name="password" placeholder="Password" required>
                                 </div>
                                 <div class="checkbox-wrap mt-10">
                                     <label class="label-for-checkbox inline mt-15">
-                                        <input class="input-checkbox" name="rememberme" type="checkbox" id="rememberme" value="forever"> <span>Remember me</span>
+                                        <input class="input-checkbox" type="checkbox" id="rememberme" name="rememberme"> <span>Remember me</span>
                                     </label>
-                                    <a href="#" class=" mt-10">Lost your password?</a>
                                 </div>
                                 <div class="button-box mt-25">
-                                    <a href="#" class="btn btn--full btn--black">Log in</a>
+                                    <button type="submit" class="btn btn--full btn--black">Log in</button>
                                 </div>
                             </form>
                         </div>
                         <div class="tab-pane fade" id="tab_list_07" role="tabpanel">
 
-                            <form action="#" class="account-form-box">
+                            <form id="registerForm" method="POST" class="account-form-box">
                                 <h6>Register An Account</h6>
                                 <div class="single-input">
-                                    <input type="text" placeholder="Username">
+                                    <input type="text" name="username" placeholder="Username" required>
                                 </div>
                                 <div class="single-input">
-                                    <input type="text" placeholder="Email address">
+                                    <input type="email" name="email" placeholder="Email address" required>
                                 </div>
                                 <div class="single-input">
-                                    <input type="password" placeholder="Password">
+                                    <input type="password" name="password" placeholder="Password" required>
                                 </div>
-                                <p class="mt-15">Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our <a href="#" class="privacy-policy-link" target="_blank">privacy policy</a>.</p>
                                 <div class="button-box mt-25">
-                                    <a href="#" class="btn btn--full btn--black">Register</a>
+                                    <button type="submit" class="btn btn--full btn--black">Register</button>
                                 </div>
                             </form>
                         </div>
@@ -579,42 +593,7 @@
                 <a href="#" class="btn-close"><i class="icon-cross2"></i></a>
             </div>
             <div class="minicart-content">
-                <ul class="minicart-list">
-                    <li class="minicart-product">
-                        <a class="product-item_remove" href="javascript:void(0)"><i class="icon-cross2"></i></a>
-                        <a class="product-item_img">
-                            <img class="img-fluid" src="assets/images/product/small/cart-01.webp" alt="Product Image">
-                        </a>
-                        <div class="product-item_content">
-                            <a class="product-item_title" href="index.php?p=product-details">Plant pots</a>
-                            <label>Qty : <span>1</span></label>
-                            <label class="product-item_quantity">Price: <span> $20.00</span></label>
-                        </div>
-                    </li>
-                    <li class="minicart-product">
-                        <a class="product-item_remove" href="javascript:void(0)"><i class="icon-cross2"></i></a>
-                        <a class="product-item_img">
-                            <img class="img-fluid" src="assets/images/product/small/cart-02.webp" alt="Product Image">
-                        </a>
-                        <div class="product-item_content">
-                            <a class="product-item_title" href="index.php?p=product-details">Teapot with black tea</a>
-                            <label>Qty : <span>1</span></label>
-                            <label class="product-item_quantity">Price: <span> $20.00</span></label>
-                        </div>
-                    </li>
-                    <li class="minicart-product">
-                        <a class="product-item_remove" href="javascript:void(0)"><i class="icon-cross2"></i></a>
-                        <a class="product-item_img">
-                            <img class="img-fluid" src="assets/images/product/small/cart-03.webp" alt="Product Image">
-                        </a>
-                        <div class="product-item_content">
-                            <a class="product-item_title" href="index.php?p=product-details">Simple Chair</a>
-                            <label>Qty : <span>1</span></label>
-                            <label class="product-item_quantity">Price: <span> $20.00</span></label>
-                        </div>
-                    </li>
-
-                </ul>
+                <ul class="minicart-list"></ul>
             </div>
             <div class="minicart-item_total">
                 <span class="font-weight--reguler">Subtotal:</span>
@@ -710,7 +689,137 @@
 
     <!-- Main JS -->
     <script src="assets/js/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<script>
+    function showToast(message) {
+        const toast = $('#toast');
+        toast.text(message).css('opacity', '1');
+
+        setTimeout(() => {
+            toast.css('opacity', '0');
+        }, 3000);
+    }
+    function loadCartCount() {
+        $.ajax({
+            url: 'ajax/get_cart_count.php',
+            type: 'GET',
+            dataType: 'json',
+            success: function (res) {
+                $('#cart-count').text(res.count);
+            }
+        });
+    }
+    loadCartCount();
+
+    $(document).ready(function () {
+        // Login AJAX
+        $('#loginForm').submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "login.php",
+                data: $(this).serialize(),
+                dataType: "json",
+                success: function (response) {
+                    alert(response.message);
+                    if (response.status === 'success') {
+                        location.reload();
+                    }
+                }
+            });
+        });
+
+    // Register AJAX
+    $('#registerForm').submit(function (e) {
+        e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "register.php",
+                data: $(this).serialize(),
+                dataType: "json",
+                success: function (response) {
+                    alert(response.message);
+                    if (response.status === 'success') {
+                        $('#tab_list_06').addClass('show active'); // Login tab
+                        $('#tab_list_07').removeClass('show active'); // Register tab
+                    }
+                }
+            });
+        });
+    });
+
+    function refreshMiniCart() {
+        $.ajax({
+            url: 'ajax/fetch_cart.php',
+            type: 'GET',
+            dataType: 'json',
+            success: function(res) {
+                $('.minicart-list').html(res.html);
+                $('.minicart-item_total .ammount').text('₹' + res.subtotal);
+                // Optional: Update cart icon count
+                $('#cart-count').text(res.count);
+            }
+        });
+    }
+    refreshMiniCart();
+
+    $(document).ready(function() {
+        $('.ajax-add-to-cart').on('click', function(e) {
+            e.preventDefault();
+
+            if ($(this).hasClass('disabled')) {
+                alert('This product is out of stock!');
+                return false;
+            }
+
+            let productId = $(this).data('id');
+
+            $.ajax({
+                url: 'ajax/add_to_cart.php',
+                type: 'POST',
+                data: {
+                    product_id: productId,
+                    quantity: 1
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'success') {
+                        alert('Product added to cart!');
+                        refreshMiniCart();
+                        loadCartCount();
+                        // Optionally update cart count badge:
+                        $('#cart-count').text(response.cart_count);
+                    } else {
+                        alert('Something went wrong!');
+                    }
+                },
+                error: function() {
+                    alert('Error processing request.');
+                }
+            });
+        });
+    });
+    // Remove item from minicart
+    $(document).on('click', '.product-item_remove', function () {
+        let product_id = $(this).data('id');
+
+        $.ajax({
+            url: 'ajax/remove_from_cart.php',
+            type: 'POST',
+            data: { product_id: product_id },
+            dataType: 'json',
+            success: function (response) {
+                if (response.status === 'success') {
+                    showToast('Product removed from cart');
+                    refreshMiniCart(); // reload minicart
+                    loadCartCount();
+                }
+            }
+        });
+    });
+
+</script>
 
 </body>
 </html>
