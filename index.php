@@ -32,7 +32,8 @@
 
                     <div class="col-lg-3 col-lg-3 col-6">
                         <div class="logo text-start">
-                            <a href="#"><img src="assets/images/logo/logo.svg" alt=""></a>
+                            <!-- <a href="#"><img src="assets/images/logo/logo.svg" alt=""></a> -->
+                            <a class="navbar-brand fs-3" href="dashboard.php">FurniNest</a>
                         </div>
                     </div>
 

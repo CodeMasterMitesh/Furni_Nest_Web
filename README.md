@@ -33,11 +33,10 @@ A sleek and powerful PHP-based admin dashboard designed for managing your furnit
 
 ## 📸 Screenshots
 
-| Login Page | Dashboard |
+| Login Page | Dashboard | Website |
 |------------|-----------|
 | ![Login](screenshots/login.png) | ![Dashboard](screenshots/dashboard.png) |
-
-> 💡 Tip: Add your screenshots inside a `screenshots/` folder.
+| ![Website](screenshots/website.png) |
 
 ---
 
