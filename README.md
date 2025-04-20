@@ -65,7 +65,7 @@ furninest/
 
 
 🔐 Default Admin Credentials
-Username: admin@example.com
+Username: admin
 Password: admin123
 
 🤝 Contributing

@@ -68,7 +68,7 @@ function createDropdown($selectName, $table, $valueField, $displayField, $select
     return $dropdown;
 }
 
-// $password = password_hash("Mitesh@2025", PASSWORD_DEFAULT);
-// mysqli_query($conn, "INSERT INTO users (first_name, last_name,display_name,email,password,phone,role) VALUES ('Mitesh','Prajapati','Mitesh','info@codemastermitesh.com','$password','9033889873','admin')");
+// $password = password_hash("admin123", PASSWORD_DEFAULT);
+// mysqli_query($conn, "INSERT INTO users (first_name, last_name,display_name,email,username,password,phone,role) VALUES ('admin','admin','admin','admin@example.com','admin','$password','1234567890','admin')");
 
 ?>

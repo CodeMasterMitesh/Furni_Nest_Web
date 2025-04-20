@@ -2,15 +2,20 @@
 include '../config/conn.php';
 
 if (isset($_POST['login'])) {
+  print_r($_POST);
+  // exit;
   $username = mysqli_real_escape_string($conn, $_POST['username']);
   $password = $_POST['password'];
 
   $sql = "SELECT * FROM users WHERE username = '$username'";
   $res = mysqli_query($conn, $sql);
-
+  // print_r($res);
+  // // echo $sql;
   if (mysqli_num_rows($res) == 1) {
     $row = mysqli_fetch_assoc($res);
     if (password_verify($password, $row['password'])) {
+        // print_r($row['password']);
+        // exit;
       $_SESSION['admin_logged_in'] = true;
       $_SESSION['admin_username'] = $row['username'];
       $_SESSION['udata'] = $row;
