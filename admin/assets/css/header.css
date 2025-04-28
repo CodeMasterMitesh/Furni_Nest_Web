@@ -1,14 +1,27 @@
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: #f3f4f6;
+    /* background-color: #f3f4f6; */
+    font-size: 13px;
   }
-
+  body, p, label, input, select, textarea, .form-control, .breadcrumb, .card, .btn, .table {
+    font-size: 13px !important;
+  }
+  a{
+    text-decoration: none;
+  }
+  .form-control{
+    padding:3px !important;
+    border-radius:3px;
+  }
+  .form-label{
+    margin-bottom:0px !important;
+  }
   .navbar {
     background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(10px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 0.8rem 1.2rem;
+    /* padding: 0.8rem 1.2rem; */
     transition: all 0.3s ease-in-out;
   }
 

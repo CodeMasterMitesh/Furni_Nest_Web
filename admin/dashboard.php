@@ -1,5 +1,7 @@
 <?php 
 include('partition/header.php'); 
+// print_r($_SESSION);
+// exit;
 ?>
 <link rel="stylesheet" href="/admin/assets/css/dashboard.css">
 <div class="content">

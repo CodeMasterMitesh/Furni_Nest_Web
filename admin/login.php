@@ -2,7 +2,7 @@
 include '../config/conn.php';
 
 if (isset($_POST['login'])) {
-  print_r($_POST);
+  // print_r($_POST);
   // exit;
   $username = mysqli_real_escape_string($conn, $_POST['username']);
   $password = $_POST['password'];

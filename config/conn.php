@@ -12,10 +12,11 @@ $conn = mysqli_connect($host, $db_user, $db_pass, $db_name);
 
 // Check connection
 if (!$conn) {
+    // echo "error";
     die("Database connection failed: " . mysqli_connect_error());
 }else{
 
-    // echo "Connected successfully to furni_nest_db";
+    // echo "Connected successfully to db";
 }
 
 // Set charset (optional but recommended)
@@ -71,4 +72,108 @@ function createDropdown($selectName, $table, $valueField, $displayField, $select
 // $password = password_hash("admin123", PASSWORD_DEFAULT);
 // mysqli_query($conn, "INSERT INTO users (first_name, last_name,display_name,email,username,password,phone,role) VALUES ('admin','admin','admin','admin@example.com','admin','$password','1234567890','admin')");
 
+// Get products with filters
+function getProducts($filters = []) {
+    global $conn;
+    
+    $sql = "SELECT p.*, c.name as category_name
+            FROM products p 
+            LEFT JOIN categories c ON p.category_id = c.id
+            WHERE 1";
+    
+    $params = [];
+    $types = '';
+    
+    if (!empty($filters['search'])) {
+        $sql .= " AND (p.name LIKE ? OR p.description LIKE ?)";
+        $params[] = "%{$filters['search']}%";
+        $params[] = "%{$filters['search']}%";
+        $types .= 'ss';
+    }
+    
+    if (!empty($filters['category'])) {
+        $sql .= " AND p.category_id = ?";
+        $params[] = $filters['category'];
+        $types .= 'i';
+    }
+    
+    if (!empty($filters['vendor'])) {
+        $sql .= " AND p.vendor_id = ?";
+        $params[] = $filters['vendor'];
+        $types .= 'i';
+    }
+    
+    // Add pagination
+    $page = isset($filters['page']) ? max(1, (int)$filters['page']) : 1;
+    $limit = 10;
+    $offset = ($page - 1) * $limit;
+    $sql .= " LIMIT ? OFFSET ?";
+    $params[] = $limit;
+    $params[] = $offset;
+    $types .= 'ii';
+    
+    $stmt = $conn->prepare($sql);
+    // echo $stmt;
+    if (!empty($params)) {
+        $stmt->bind_param($types, ...$params);
+    }
+    
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
+
+// Count all products
+function countProducts() {
+    global $conn;
+    $result = $conn->query("SELECT COUNT(*) FROM products");
+    return $result->fetch_row()[0];
+}
+
+// Count published products
+function countPublishedProducts() {
+    global $conn;
+    $result = $conn->query("SELECT COUNT(*) FROM products WHERE status = 'published'");
+    return $result->fetch_row()[0];
+}
+
+// Count draft products
+function countDraftProducts() {
+    global $conn;
+    $result = $conn->query("SELECT COUNT(*) FROM products WHERE status = 'draft'");
+    return $result->fetch_row()[0];
+}
+
+// Count discounted products
+function countDiscountedProducts() {
+    global $conn;
+    $result = $conn->query("SELECT COUNT(*) FROM products WHERE discount > 0");
+    return $result->fetch_row()[0];
+}
+
+// Get all categories
+function getCategories() {
+    global $conn;
+    $result = $conn->query("SELECT * FROM categories ORDER BY name");
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
+
+// Get all vendors
+// function getVendors() {
+//     global $conn;
+//     $result = $conn->query("SELECT * FROM vendors ORDER BY name");
+//     return $result->fetch_all(MYSQLI_ASSOC);
+// }
+
+// Format price
+function formatPrice($price) {
+    return '$' . number_format($price, 2);
+}
+
+// Close connection at the end of script execution
+register_shutdown_function(function() {
+    global $conn;
+    // $mysqli->close();
+});
 ?>

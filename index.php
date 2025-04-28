@@ -1,6 +1,9 @@
 <?php 
 include('config/conn.php'); 
+// echo "<pre>";
 // print_r($_SESSION);
+// echo "</pre>";
+// exit;
 if(!isset($_SESSION['customer_logged_in'])){
     $_SESSION['customer_logged_in'] = false;
 }
@@ -145,7 +148,8 @@ if(!isset($_SESSION['customer_logged_in'])){
                     </div>
                     <div class="col-lg-3 col-lg-3 col-md-6 col-sm-12">
                         <div class="header-right-side align-items-center hcenter text-end">
-                            <?php if($_SESSION['customer_logged_in']){
+                            <?php
+                            if($_SESSION['customer_logged_in']){
                                  if(isset($_SESSION['user_id'])){
                                     $user_id = $_SESSION['user_id'];
                                     $sql = "SELECT * FROM users WHERE id='$user_id'";
@@ -525,7 +529,7 @@ if(!isset($_SESSION['customer_logged_in'])){
                                     <a href="#"><span>Other Pages</span></a>
                                     <ul class="sub-menu">
                                         <li><a href="index.php?p=cart"><span>Cart</span></a></li>
-                                        <li><a href="index.php?p=checkout"><span>Checkout</span></a></li>
+                                        <li><a href="#" id="checkoutBtn"><span>Checkout</span></a></li>
                                         <li><a href="index.php?p=my-account"><span>My Account</span></a></li>
                                         <li><a href="index?p=wishlist"><span>Wishlist</span></a></li>
                                         <li><a href="index.php?p=order-tracking"><span>Order Tracking</span></a></li>
@@ -602,8 +606,8 @@ if(!isset($_SESSION['customer_logged_in'])){
             <div class="minicart-btn_area">
                 <a href="index.php?p=cart" class="btn btn--full btn--border_1">View cart</a>
             </div>
-            <div class="minicart-btn_area">
-                <a href="index.php?p=checkout" class="btn btn--full btn--black">Checkout</a>
+            <div class="minicart-btn_area mcart">
+                <a id="checkoutBtn" class="btn btn--full btn--black">Checkout</a>
             </div>
         </div>
 
@@ -681,6 +685,7 @@ if(!isset($_SESSION['customer_logged_in'])){
 
     <!-- Bootstrap JS -->
     <script src="assets/js/vendor/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Plugins JS (Please remove the comment from below plugins.min.js for better website load performance and remove plugin js files from avobe) -->
 
@@ -710,7 +715,7 @@ if(!isset($_SESSION['customer_logged_in'])){
             }
         });
     }
-    loadCartCount();
+    // loadCartCount();
 
     $(document).ready(function () {
         // Login AJAX
@@ -739,6 +744,7 @@ if(!isset($_SESSION['customer_logged_in'])){
                 data: $(this).serialize(),
                 dataType: "json",
                 success: function (response) {
+                    console.log(response);
                     alert(response.message);
                     if (response.status === 'success') {
                         $('#tab_list_06').addClass('show active'); // Login tab
@@ -819,6 +825,22 @@ if(!isset($_SESSION['customer_logged_in'])){
         });
     });
 
+</script>
+<script>
+
+    $(document).ready(function() {
+        $(document).on('click', '#checkoutBtn', function () {
+            var isLoggedIn = <?php echo isset($_SESSION['customer_logged_in']) && $_SESSION['customer_logged_in'] == true ? 'true' : 'false'; ?>;
+            // console.log('Login Status:', isLoggedIn); // Debug line
+            if (isLoggedIn) {
+                window.location.href = 'index.php?p=checkout';
+            } else {
+                $('#exampleModal').modal('show');
+                $("#miniCart").removeClass("open");
+                $(".global-overlay").removeClass("overlay-open");
+            }
+        });
+    });
 </script>
 
 </body>

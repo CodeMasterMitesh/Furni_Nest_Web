@@ -119,7 +119,11 @@
                                 $cat_query = mysqli_query($conn, "SELECT * FROM categories");
                                 while ($row = mysqli_fetch_assoc($cat_query)) {
                                     $categories[] = $row;
+                                    // echo "<pre>";
+                                    // print_r($categories);
+                                    // echo "</pre>";
                                 }
+                                // exit;
                                 ?>
                             <ul class="nav product-tab-menu justify-content-lg-end justify-content-center" role="tablist">
                                 <li class="tab__item nav-item active">
@@ -142,8 +146,42 @@
                                 <?php
                                     $all_query = mysqli_query($conn, "SELECT * FROM products");
                                     while ($product = mysqli_fetch_assoc($all_query)) {
-                                        include 'product-card.php';
+                                        // echo "<pre>";
+                                        // print_r($product);
+                                        // echo "</pre>";
+                                        ?>
+                                        <div class="single-product-item text-center">
+                                        <div class="products-images">
+                                            <a href="index.php?p=product-details&id=<?= $product['id'] ?>" class="product-thumbnail">
+                                                <img src="<?= $product['image'] ?>" class="img-fluid" width="300" height="300" alt="<?= $product['name'] ?>">
+                                                <?php if ($product['stock_status'] == 'out_of_stock'): ?>
+                                                    <span class="ribbon out-of-stock">Out Of Stock</span>
+                                                <?php elseif ($product['discount'] > 0): ?>
+                                                    <span class="ribbon onsale">-<?= $product['discount'] ?>%</span>
+                                                <?php endif; ?>
+                                            </a>
+                                            <div class="product-actions">
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#prodect-modal"><i class="p-icon icon-plus"></i><span class="tool-tip">Quick View</span></a>
+                                                <a href="#" class="ajax-add-to-cart <?= $product['stock_status'] == 'out_of_stock' ? 'disabled' : '' ?>" data-id="<?= $product['id'] ?>">
+                                                    <i class="p-icon icon-bag2"></i> 
+                                                    <span class="tool-tip">Add to cart</span>
+                                                </a>
+                                                <a href="index.php?p=wishlist"><i class="p-icon icon-heart"></i> <span class="tool-tip">Browse Wishlist</span></a>
+                                            </div>
+                                        </div>
+                                        <div class="product-content">
+                                            <h6 class="prodect-title"><a href="index.php?p=product-details&id=<?= $product['id'] ?>"><?= $product['name'] ?></a></h6>
+                                            <div class="prodect-price">
+                                                <span class="new-price">₹<?php echo number_format($product['price'], 2) ?></span>
+                                                <?php if ($product['old_price'] > 0): ?>
+                                                    - <span class="old-price">₹<?= number_format($product['old_price'], 2) ?></span>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <?php
                                     }
+                                    // exit;
                                 ?>
                                 <!-- Single Product Item End -->
                             </div>
@@ -210,21 +248,11 @@
                                 <li class="tab__item nav-item active">
                                     <a class="nav-link active" data-bs-toggle="tab" href="#tab_list_11" role="tab">All Products</a>
                                 </li>
+                                <?php foreach ($categories as $index => $cat): ?>
                                 <li class="tab__item nav-item">
-                                    <a class="nav-link" data-bs-toggle="tab" href="#tab_list_12" role="tab">Accessories</a>
+                                    <a class="nav-link" data-bs-toggle="tab" href="#tab_<?= $cat['id'] ?>" role="tab"><?= $cat['name'] ?></a>
                                 </li>
-                                <li class="tab__item nav-item">
-                                    <a class="nav-link" data-bs-toggle="tab" href="#tab_list_13" role="tab">Chair</a>
-                                </li>
-                                <li class="tab__item nav-item">
-                                    <a class="nav-link" data-bs-toggle="tab" href="#tab_list_14" role="tab">Decoration</a>
-                                </li>
-                                <li class="tab__item nav-item">
-                                    <a class="nav-link" data-bs-toggle="tab" href="#tab_list_15" role="tab">Furniture</a>
-                                </li>
-                                <li class="tab__item nav-item">
-                                    <a class="nav-link" data-bs-toggle="tab" href="#tab_list_16" role="tab">Table</a>
-                                </li>
+                                <?php endforeach; ?>
                             </ul>
                         </div>
 
@@ -234,194 +262,48 @@
                         <div class="tab-pane fade show active" id="tab_list_11">
                             <!-- product-slider-active -->
                             <div class="row">
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <!-- Single Product Item Start -->
-                                    <div class="single-product-item text-center">
+                            <?php
+                                    $all_query = mysqli_query($conn, "SELECT * FROM products");
+                                    while ($product = mysqli_fetch_assoc($all_query)) {
+                                        // echo "<pre>";
+                                        // print_r($product);
+                                        // echo "</pre>";
+                                        ?>
+                                        <div class="col-lg-3 col-md-4 col-sm-6">
+                                        <div class="single-product-item text-center">
                                         <div class="products-images">
-                                            <a href="index.php?p=product-details" class="product-thumbnail">
-                                                <img src="assets/images/product/1_1-300x300.webp" class="img-fluid" alt="Product Images" width="300" height="300">
-
-                                                <span class="ribbon out-of-stock ">
-                                                Out Of Stock
-                                            </span>
+                                            <a href="index.php?p=product-details&id=<?= $product['id'] ?>" class="product-thumbnail">
+                                                <img src="<?= $product['image'] ?>" class="img-fluid" width="300" height="300" alt="<?= $product['name'] ?>">
+                                                <?php if ($product['stock_status'] == 'out_of_stock'): ?>
+                                                    <span class="ribbon out-of-stock">Out Of Stock</span>
+                                                <?php elseif ($product['discount'] > 0): ?>
+                                                    <span class="ribbon onsale">-<?= $product['discount'] ?>%</span>
+                                                <?php endif; ?>
                                             </a>
                                             <div class="product-actions">
                                                 <a href="#" data-bs-toggle="modal" data-bs-target="#prodect-modal"><i class="p-icon icon-plus"></i><span class="tool-tip">Quick View</span></a>
-                                                <a href="index.php?p=product-details"><i class="p-icon icon-bag2"></i> <span class="tool-tip">Add to cart</span></a>
+                                                <a href="#" class="ajax-add-to-cart <?= $product['stock_status'] == 'out_of_stock' ? 'disabled' : '' ?>" data-id="<?= $product['id'] ?>">
+                                                    <i class="p-icon icon-bag2"></i> 
+                                                    <span class="tool-tip">Add to cart</span>
+                                                </a>
                                                 <a href="index.php?p=wishlist"><i class="p-icon icon-heart"></i> <span class="tool-tip">Browse Wishlist</span></a>
                                             </div>
                                         </div>
                                         <div class="product-content">
-                                            <h6 class="prodect-title"><a href="index.php?p=product-details">Teapot with black tea</a></h6>
+                                            <h6 class="prodect-title"><a href="index.php?p=product-details&id=<?= $product['id'] ?>"><?= $product['name'] ?></a></h6>
                                             <div class="prodect-price">
-                                                <span class="new-price">£40.00</span> - <span class="old-price"> £635.00</span>
+                                                <span class="new-price">₹<?php echo number_format($product['price'], 2) ?></span>
+                                                <?php if ($product['old_price'] > 0): ?>
+                                                    - <span class="old-price">₹<?= number_format($product['old_price'], 2) ?></span>
+                                                <?php endif; ?>
                                             </div>
                                         </div>
-                                    </div><!-- Single Product Item End -->
-                                </div>
-
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <!-- Single Product Item Start -->
-                                    <div class="single-product-item text-center">
-                                        <div class="products-images">
-                                            <a href="index.php?p=product-details" class="product-thumbnail">
-                                                <img src="assets/images/product/1_2-300x300.webp" class="img-fluid" alt="Product Images" width="300" height="300">
-
-                                            </a>
-                                            <div class="product-actions">
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#prodect-modal"><i class="p-icon icon-plus"></i><span class="tool-tip">Quick View</span></a>
-                                                <a href="index.php?p=product-details"><i class="p-icon icon-bag2"></i> <span class="tool-tip">Add to cart</span></a>
-                                                <a href="index.php?p=wishlist"><i class="p-icon icon-heart"></i> <span class="tool-tip">Browse Wishlist</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-content">
-                                            <h6 class="prodect-title"><a href="index.php?p=product-details">Teapot with black tea</a></h6>
-                                            <div class="prodect-price">
-                                                <span class="new-price">£20.00</span> - <span class="old-price"> £135.00</span>
-                                            </div>
-                                        </div>
-                                    </div><!-- Single Product Item End -->
-                                </div>
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <!-- Single Product Item Start -->
-                                    <div class="single-product-item text-center">
-                                        <div class="products-images">
-                                            <a href="index.php?p=product-details" class="product-thumbnail">
-                                                <img src="assets/images/product/1_3-300x300.webp" class="img-fluid" alt="Product Images" width="300" height="300">
-
-                                            </a>
-                                            <div class="product-actions">
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#prodect-modal"><i class="p-icon icon-plus"></i><span class="tool-tip">Quick View</span></a>
-                                                <a href="index.php?p=product-details"><i class="p-icon icon-bag2"></i> <span class="tool-tip">Add to cart</span></a>
-                                                <a href="index.php?p=wishlist"><i class="p-icon icon-heart"></i> <span class="tool-tip">Browse Wishlist</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-content">
-                                            <h6 class="prodect-title"><a href="index.php?p=product-details">Smooth Disk</a></h6>
-                                            <div class="prodect-price">
-                                                <span class="new-price">£46.00</span>
-                                            </div>
-                                        </div>
-                                    </div><!-- Single Product Item End -->
-                                </div>
-
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <!-- Single Product Item Start -->
-                                    <div class="single-product-item text-center">
-                                        <div class="products-images">
-                                            <a href="index.php?p=product-details" class="product-thumbnail">
-                                                <img src="assets/images/product/1_4-300x300.webp" class="img-fluid" alt="Product Images" width="300" height="300">
-
-                                                <span class="ribbon onsale">
-                                            -14%
-                                            </span>
-                                            </a>
-                                            <div class="product-actions">
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#prodect-modal"><i class="p-icon icon-plus"></i><span class="tool-tip">Quick View</span></a>
-                                                <a href="index.php?p=product-details"><i class="p-icon icon-bag2"></i> <span class="tool-tip">Add to cart</span></a>
-                                                <a href="index.php?p=wishlist"><i class="p-icon icon-heart"></i> <span class="tool-tip">Browse Wishlist</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-content">
-                                            <h6 class="prodect-title"><a href="index.php?p=product-details">Wooden Flowerpot</a></h6>
-                                            <div class="prodect-price">
-                                                <span class="new-price">£40.00</span> - <span class="old-price"> £635.00</span>
-                                            </div>
-                                        </div>
-                                    </div><!-- Single Product Item End -->
-                                </div>
-
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <!-- Single Product Item Start -->
-                                    <div class="single-product-item text-center">
-                                        <div class="products-images">
-                                            <a href="index.php?p=product-details" class="product-thumbnail">
-                                                <img src="assets/images/product/1_5-300x300.webp" class="img-fluid" alt="Product Images" width="300" height="300">
-
-                                            </a>
-                                            <div class="product-actions">
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#prodect-modal"><i class="p-icon icon-plus"></i><span class="tool-tip">Quick View</span></a>
-                                                <a href="index.php?p=product-details"><i class="p-icon icon-bag2"></i> <span class="tool-tip">Add to cart</span></a>
-                                                <a href="index.php?p=wishlist"><i class="p-icon icon-heart"></i> <span class="tool-tip">Browse Wishlist</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-content">
-                                            <h6 class="prodect-title"><a href="index.php?p=product-details">Living room & Bedroom lights</a></h6>
-                                            <div class="prodect-price">
-                                                <span class="new-price">£60.00</span> - <span class="old-price"> £69.00</span>
-                                            </div>
-                                        </div>
-                                    </div><!-- Single Product Item End -->
-                                </div>
-
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <!-- Single Product Item Start -->
-                                    <div class="single-product-item text-center">
-                                        <div class="products-images">
-                                            <a href="index.php?p=product-details" class="product-thumbnail">
-                                                <img src="assets/images/product/1_6-300x300.webp" class="img-fluid" alt="Product Images" width="300" height="300">
-
-                                            </a>
-                                            <div class="product-actions">
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#prodect-modal"><i class="p-icon icon-plus"></i><span class="tool-tip">Quick View</span></a>
-                                                <a href="index.php?p=product-details"><i class="p-icon icon-bag2"></i> <span class="tool-tip">Add to cart</span></a>
-                                                <a href="index.php?p=wishlist"><i class="p-icon icon-heart"></i> <span class="tool-tip">Browse Wishlist</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-content">
-                                            <h6 class="prodect-title"><a href="index.php?p=product-details">Gray lamp</a></h6>
-                                            <div class="prodect-price">
-                                                <span class="new-price">£80.00</span>
-                                            </div>
-                                        </div>
-                                    </div><!-- Single Product Item End -->
-                                </div>
-
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <!-- Single Product Item Start -->
-                                    <div class="single-product-item text-center">
-                                        <div class="products-images">
-                                            <a href="index.php?p=product-details" class="product-thumbnail">
-                                                <img src="assets/images/product/1_7-300x300.webp" class="img-fluid" alt="Product Images" width="300" height="300">
-
-                                            </a>
-                                            <div class="product-actions">
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#prodect-modal"><i class="p-icon icon-plus"></i><span class="tool-tip">Quick View</span></a>
-                                                <a href="index.php?p=product-details"><i class="p-icon icon-bag2"></i> <span class="tool-tip">Add to cart</span></a>
-                                                <a href="index.php?p=wishlist"><i class="p-icon icon-heart"></i> <span class="tool-tip">Browse Wishlist</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-content">
-                                            <h6 class="prodect-title"><a href="index.php?p=product-details">Decoration wood</a></h6>
-                                            <div class="prodect-price">
-                                                <span class="new-price">£50.00</span>
-                                            </div>
-                                        </div>
-                                    </div><!-- Single Product Item End -->
-                                </div>
-
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <!-- Single Product Item Start -->
-                                    <div class="single-product-item text-center">
-                                        <div class="products-images">
-                                            <a href="index.php?p=product-details" class="product-thumbnail">
-                                                <img src="assets/images/product/1_8-300x300.webp" class="img-fluid" alt="Product Images" width="300" height="300">
-
-                                            </a>
-                                            <div class="product-actions">
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#prodect-modal"><i class="p-icon icon-plus"></i><span class="tool-tip">Quick View</span></a>
-                                                <a href="index.php?p=product-details"><i class="p-icon icon-bag2"></i> <span class="tool-tip">Add to cart</span></a>
-                                                <a href="index.php?p=wishlist"><i class="p-icon icon-heart"></i> <span class="tool-tip">Browse Wishlist</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-content">
-                                            <h6 class="prodect-title"><a href="index.php?p=product-details">Teapot with black tea</a></h6>
-                                            <div class="prodect-price">
-                                                <span class="new-price">£20.00</span> - <span class="old-price"> £135.00</span>
-                                            </div>
-                                        </div>
-                                    </div><!-- Single Product Item End -->
-                                </div>
+                                    </div>
+                                    </div>
+                                    <?php
+                                    }
+                                    // exit;
+                                ?>
                             </div>
                         </div>
                         <div class="tab-pane" id="tab_list_12">

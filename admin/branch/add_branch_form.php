@@ -1,5 +1,5 @@
 <?php 
-include('partition/header.php');
+include('../partition/header.php');
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // echo "<pre>";
   // print_r($_POST);
@@ -53,4 +53,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       </div>
     </div>
   </div>
-  <?php include('partition/footer.php'); ?>
+  <?php include('../partition/footer.php'); ?>
