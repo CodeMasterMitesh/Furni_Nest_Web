@@ -176,4 +176,66 @@ register_shutdown_function(function() {
     global $conn;
     // $mysqli->close();
 });
+
+function getOrderStats($conn) {
+    $stats = [
+        'today_orders' => 0,
+        'month_orders' => 0,
+        'year_orders' => 0,
+        'today_amount' => 0,
+        'month_amount' => 0,
+        'year_amount' => 0
+    ];
+
+    $today = date('Y-m-d');
+    $month = date('m');
+    $year = date('Y');
+
+    // Today's Orders and Amount
+    $query_today = "
+        SELECT 
+            COUNT(DISTINCT o.id) AS total_orders, 
+            SUM(oi.price * oi.quantity) AS total_price
+        FROM orders o
+        LEFT JOIN order_items oi ON o.id = oi.order_id
+        WHERE DATE(o.created_at) = '$today'
+    ";
+    $result_today = mysqli_query($conn, $query_today);
+    if ($row = mysqli_fetch_assoc($result_today)) {
+        $stats['today_orders'] = $row['total_orders'];
+        $stats['today_amount'] = $row['total_price'] ?? 0;
+    }
+
+    // This Month's Orders and Amount
+    $query_month = "
+        SELECT 
+            COUNT(DISTINCT o.id) AS total_orders, 
+            SUM(oi.price * oi.quantity) AS total_price
+        FROM orders o
+        LEFT JOIN order_items oi ON o.id = oi.order_id
+        WHERE YEAR(o.created_at) = '$year' AND MONTH(o.created_at) = '$month'
+    ";
+    $result_month = mysqli_query($conn, $query_month);
+    if ($row = mysqli_fetch_assoc($result_month)) {
+        $stats['month_orders'] = $row['total_orders'];
+        $stats['month_amount'] = $row['total_price'] ?? 0;
+    }
+
+    // This Year's Orders and Amount
+    $query_year = "
+        SELECT 
+            COUNT(DISTINCT o.id) AS total_orders, 
+            SUM(oi.price * oi.quantity) AS total_price
+        FROM orders o
+        LEFT JOIN order_items oi ON o.id = oi.order_id
+        WHERE YEAR(o.created_at) = '$year'
+    ";
+    $result_year = mysqli_query($conn, $query_year);
+    if ($row = mysqli_fetch_assoc($result_year)) {
+        $stats['year_orders'] = $row['total_orders'];
+        $stats['year_amount'] = $row['total_price'] ?? 0;
+    }
+
+    return $stats;
+}
 ?>

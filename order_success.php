@@ -15,11 +15,6 @@ if (mysqli_num_rows($cart_result) == 0) {
     echo "Cart is empty!";
     exit();
 }
-if($_REQUEST['METHOD'] == "POST"){
-
-    print_r($_POST);
-    exit;
-}
 // Fetch billing address
 $first_name = $_POST['first_name'];
 $last_name = $_POST['last_name'];

@@ -17,7 +17,14 @@ $result = mysqli_query($conn, $sql);
             <div class="row">
                 <div class="col-lg-7">
                     <div class="customer-zone mb-30">
-                        <p class="cart-page-title">Returning customer? <a class="checkout-click-login" href="#"> Click here to login</a></p>
+                        <?php if($_SESSION['customer_logged_in']){
+                            ?>
+                            <h3><?php echo $_SESSION['customer_data']['first_name']?></h3>
+                     <?php  }else{
+                        ?>
+                         <p class="cart-page-title">Returning customer? <a class="checkout-click-login" href="#"> Click here to login</a></p>
+
+                     <?php } ?>
                         <div class="checkout-login-info">
                             <p>If you have shopped with us before, please enter your details in the boxes below. If you are a new customer, please proceed to the Billing & Shipping section.</p>
                             <form action="#" class="account-form-box">
@@ -56,7 +63,7 @@ $result = mysqli_query($conn, $sql);
             </div>
 
 
-        <form id="placeOrder" method="POST">
+        <form action="order_success.php" method="POST">
             <div class="checkout-wrap">
                 <div class="row">
                     <div class="col-lg-7">
@@ -209,8 +216,7 @@ $result = mysqli_query($conn, $sql);
 <?php include("pages/footer.php"); ?>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $(document).ready(function () {
-    $('#placeOrder').submit(function (e) {
+    $(document).on('click', '#placeOrder', function (e) {
             e.preventDefault();
             $.ajax({
                 type: "POST",
@@ -225,5 +231,4 @@ $result = mysqli_query($conn, $sql);
                 }
             });
         });
-    });
 </script>

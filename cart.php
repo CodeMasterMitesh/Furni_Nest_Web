@@ -3,10 +3,10 @@
 $user_id = $_SESSION['user_id'];
 
 // Fetch cart items
-$sql = "SELECT products.id as product_id,cart.id as cart_id, cart.quantity, products.name, products.price, products.image 
-        FROM cart 
-        JOIN products ON cart.product_id = products.id 
-        WHERE cart.user_id = '$user_id'";
+    $sql = "SELECT products.id as product_id,cart.id as cart_id, cart.quantity, products.name, products.price, products.image 
+            FROM cart 
+            JOIN products ON cart.product_id = products.id 
+            WHERE cart.user_id = '$user_id'";
 
 $result = mysqli_query($conn, $sql);
 ?>
@@ -137,8 +137,8 @@ $(document).ready(function() {
 
     // // When click on Decrement
     $(document).on('click', '.dec', function() {
-        var product_id = $(this).closest('tr').data('product-id');;
-        console.log(product_id);
+        var product_id = $(this).closest('tr').data('product-id');
+        // console.log(product_id);
         var input = $(this).siblings('.cart-plus-minus-box');
         var quantity = parseInt(input.val());
         var price = $(".amount").text();

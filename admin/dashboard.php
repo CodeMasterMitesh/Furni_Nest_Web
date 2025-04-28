@@ -1,5 +1,6 @@
 <?php 
-include('partition/header.php'); 
+include('partition/header.php');
+$orderStats = getOrderStats($conn);
 // print_r($_SESSION);
 // exit;
 ?>
@@ -11,57 +12,61 @@ include('partition/header.php');
 
       <!-- First Row -->
       <div class="row g-4 mb-4">
-        <div class="col-md-3">
-          <div class="dashboard-card bg-gradient-primary">
-            <h6>Total Orders</h6>
-            <div class="value">150</div>
-            <i class="bi bi-cart-check card-icon"></i>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="dashboard-card bg-gradient-success">
-            <h6>Today's Orders</h6>
-            <div class="value">15</div>
-            <i class="bi bi-calendar-day card-icon"></i>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="dashboard-card bg-gradient-warning">
-            <h6>This Month's Orders</h6>
-            <div class="value">75</div>
-            <i class="bi bi-calendar3 card-icon"></i>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="dashboard-card bg-gradient-danger">
-            <h6>This Year's Orders</h6>
-            <div class="value">320</div>
-            <i class="bi bi-calendar-range card-icon"></i>
-          </div>
-        </div>
+    <div class="col-md-3">
+      <div class="dashboard-card bg-gradient-success">
+        <h6>Today's Orders</h6>
+        <div class="value"><?= $orderStats['today_orders'] ?></div>
+        <i class="bi bi-calendar-day card-icon"></i>
       </div>
+    </div>
+    <div class="col-md-3">
+      <div class="dashboard-card bg-gradient-warning">
+        <h6>This Month's Orders</h6>
+        <div class="value"><?= $orderStats['month_orders'] ?></div>
+        <i class="bi bi-calendar3 card-icon"></i>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="dashboard-card bg-gradient-danger">
+        <h6>This Year's Orders</h6>
+        <div class="value"><?= $orderStats['year_orders'] ?></div>
+        <i class="bi bi-calendar-range card-icon"></i>
+      </div>
+    </div>
+</div>
 
       <!-- Second Row -->
       <div class="row g-4 mb-4">
         <div class="col-md-3">
-          <div class="dashboard-card bg-gradient-secondary">
-            <h6>Total Customers</h6>
-            <div class="value">120</div>
-            <i class="bi bi-people card-icon"></i>
-          </div>
-        </div>
-        <div class="col-md-3">
           <div class="dashboard-card bg-gradient-dark">
             <h6>This Month's Sales</h6>
-            <div class="value">₹75,000</div>
+            <div class="value"><?= $orderStats['month_amount'] ?></div>
             <i class="bi bi-graph-up-arrow card-icon"></i>
           </div>
         </div>
         <div class="col-md-3">
           <div class="dashboard-card bg-gradient-info">
             <h6>Today's Sales</h6>
-            <div class="value">₹5,500</div>
+            <div class="value"><?= $orderStats['today_amount'] ?></div>
             <i class="bi bi-currency-rupee card-icon"></i>
+          </div>
+        </div>
+        <div class="col-md-3">
+        <div class="dashboard-card bg-gradient-primary">
+            <h6>Yearly Sales</h6>
+            <div class="value"><?= $orderStats['year_amount'] ?></div>
+            <i class="bi bi-cart-check card-icon"></i>
+          </div>
+        </div>
+        
+      </div>
+      
+      <div class="row g-4 mb-4">
+        <div class="col-md-3">
+          <div class="dashboard-card bg-gradient-secondary">
+            <h6>Total Customers</h6>
+            <div class="value">120</div>
+            <i class="bi bi-people card-icon"></i>
           </div>
         </div>
         <div class="col-md-3">
