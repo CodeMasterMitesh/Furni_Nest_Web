@@ -1,8 +1,5 @@
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
-
-
-<!-- Mirrored from htmldemo.net/furninest/furninest/index-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 19 Apr 2025 03:25:07 GMT -->
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>FurniNest &#8211; Minimalis Furniture eCommerce HTML Template</title>
@@ -24,15 +21,6 @@
 </head>
 
 <body class="">
-
-
-
-
-
-
-
-
-
     <!--====================  header area ====================-->
     <div class="header-area header-area--default bg-white">
 
@@ -1661,7 +1649,4 @@
 
 
 </body>
-
-
-<!-- Mirrored from htmldemo.net/furninest/furninest/index-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 19 Apr 2025 03:25:09 GMT -->
 </html>

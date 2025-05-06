@@ -32,7 +32,7 @@
                             <td><?php echo $row['SKU']; ?></td>
                             <td>
                                 <a href="edit_product_form.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-warning">Edit</a>
-                                <a href="delete_product_form.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-danger">Delete</a>
+                                <a class="btn btn-sm btn-danger delete-btn" data-id="<?php echo $row['id']; ?>">Delete</a>
                             </td>
                         </tr>
                         <?php
@@ -43,7 +43,37 @@
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    $(document).on('click', '.delete-btn', function(e) {
+    e.preventDefault(); // Stop default link behavior
+
+    var id = $(this).data('id');      // Get product ID
+    var row = $(this).closest('tr');  // Optional: reference the row for removal
+
+    if (confirm("Are you sure you want to delete this product?")) {
+        $.ajax({
+            url: 'delete_product_form.php', // PHP handler
+            type: 'POST',                   // Use POST for data modification
+            data: { id: id },               // Send only the ID
+            dataType: 'json',             // Expect plain text response (can be 'json' if you update PHP)
+            success: function(response) {
+                console.log(response);
+                if (response.status === "success") {
+                    $('#successModal').modal('show');  // Show success modal
+                    row.fadeOut(300);                  // Optionally fade out row
+                } else {
+                    $('#errorModal').modal('show');    // Show error modal on unexpected response
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX Error: " + error);  // For debugging
+                $('#errorModal').modal('show');         // Show error modal on failure
+            }
+        });
+    }
+});
+
   document.getElementById('searchInput').addEventListener('keyup', function () {
     let filter = this.value.toLowerCase();
     let rows = document.querySelectorAll('#productTable tr');

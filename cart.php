@@ -1,5 +1,8 @@
-
 <?php
+if (!isset($_SESSION['customer_logged_in'])) {
+    header("Location: unauthorized.html");
+    exit;
+}
 $user_id = $_SESSION['user_id'];
 
 // Fetch cart items

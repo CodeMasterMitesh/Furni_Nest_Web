@@ -293,7 +293,7 @@
                                     <a href="#"><span>Shop Pages</span></a>
                                     <ul class="sub-menu">
                                         <li><a href="shop-3-column.php"><span>Shop 3 Columns</span></a></li>
-                                        <li><a href="shop-4-column.php"><span>Shop 4 Columns</span></a></li>
+                                        <li><a href="index.php?p=shop"><span>Shop 4 Columns</span></a></li>
                                         <li><a href="shop-5-column.php"><span>Shop 5 Columns</span></a></li>
                                         <li><a href="shop-6-column.php"><span>Shop 6 Columns</span></a></li>
                                         <li><a href="shop-categories.php"><span>Shop Categories</span></a></li>

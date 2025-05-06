@@ -1,43 +1,19 @@
 <?php 
-include('../../partition/header.php');
-if (isset($_GET['id'])) {
-  $product_id = intval($_GET['id']);
+include('../../../config/conn.php');
+header('Content-Type: application/json'); // Set response type to JSON
 
-  // Delete product images first
-  $deleteImages = "DELETE FROM product_images WHERE product_id = $product_id";
-  mysqli_query($conn,$deleteImages);
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
+    $id = (int)$_POST['id'];
 
-  // Then delete product
-  $deleteProduct = "DELETE FROM products WHERE id = $product_id";
-  $result = mysqli_query($conn,$deleteProduct);
-
-  if ($result) {
-      $successMessage = "Product Delete successfully!";
-  } else {
-      $successMessage = "Failed to delete product!";
-  }
-  echo "
-    <script>
-        var successMessage = '$successMessage'; 
-        $(document).ready(function() {
-            $('#successMessage').text(successMessage);
-            $('#successModal').modal('show');
-        });
-    </script>
-  ";
+    $query = "DELETE FROM products WHERE id = $id";
+    if (mysqli_query($conn, $query)) {
+        echo json_encode(['status' => 'success']);
+    } else {
+        http_response_code(500);
+        echo json_encode(['status' => 'error', 'message' => 'Delete failed.']);
+    }
 } else {
-  $successMessage = "Invalid request!";
-  echo "
-    <script>
-        var successMessage = '$successMessage'; 
-        $(document).ready(function() {
-            $('#successMessage').text(successMessage);
-            $('#successModal').modal('show');
-        });
-    </script>
-  ";
+    http_response_code(400);
+    echo json_encode(['status' => 'error', 'message' => 'Invalid request.']);
 }
-
-  
 ?>
-<?php include('../../partition/footer.php'); ?>

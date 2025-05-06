@@ -1,5 +1,13 @@
 
-<?php  $user_id = $_SESSION['user_id'];  ?>
+<?php
+if (!isset($_SESSION['customer_logged_in'])) {
+    header("Location: unauthorized.html");
+    exit;
+}
+if($_SESSION['customer_logged_in']){
+$user_id = $_SESSION['user_id']; 
+}
+?>
 <div class="site-wrapper-reveal border-bottom">
     <div class="my-account-page-warpper section-space--ptb_120">
         <div class="container">

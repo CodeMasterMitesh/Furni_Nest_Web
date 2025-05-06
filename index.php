@@ -1,9 +1,5 @@
 <?php 
-include('config/conn.php'); 
-// echo "<pre>";
-// print_r($_SESSION);
-// echo "</pre>";
-// exit;
+include('config/conn.php');
 if(!isset($_SESSION['customer_logged_in'])){
     $_SESSION['customer_logged_in'] = false;
 }
@@ -25,21 +21,21 @@ if(!isset($_SESSION['customer_logged_in'])){
 
     <!-- Main Style CSS -->
     <link rel="stylesheet" href="assets/css/style.min.css">
-<style>
-    @media screen and (max-width: 426px) {
-        .hcenter {
-            justify-content:center !important;
+    <style>
+        @media screen and (max-width: 426px) {
+            .hcenter {
+                justify-content:center !important;
+            }
+            
+        }
+        @media screen and (min-width: 426px) and (max-width: 768px) {
+            .mmenu{
+                display: block !important;
+            }
+            
         }
         
-    }
-    @media screen and (min-width: 426px) and (max-width: 768px) {
-        .mmenu{
-            display: block !important;
-        }
-        
-    }
-    
-</style>
+    </style>
 </head>
 <body class="">
 <div id="toast" style="position: fixed; bottom: 30px; right: 30px; background-color: #333; color: #fff; padding: 10px 20px; border-radius: 4px; opacity: 0; transition: opacity 0.5s; z-index: 9999;"></div>
@@ -59,7 +55,6 @@ if(!isset($_SESSION['customer_logged_in'])){
                     </div>
 
                     <div class="col-lg-6 col-lg-6  d-none d-lg-block">
-                        <!-- navigation menu -->
                         <div class="header__navigation d-none d-lg-block">
                             <nav class="navigation-menu">
                                 <ul class="justify-content-center">
@@ -67,81 +62,17 @@ if(!isset($_SESSION['customer_logged_in'])){
                                         <a href="/"><span>Home</span></a>
                                     </li>
                                     <li class="has-children">
-                                        <a href="index.php?p=shop-4-column"><span>Shop</span></a>
-                                        <!-- mega menu -->
-                                        <!-- <ul class="megamenu megamenu--mega">
-                                            <li>
-                                                <h2 class="page-list-title">Shop Pages</h2>
-                                                <ul>
-                                                    <li><a href="index.php?p=shop-3-column"><span>Shop 3 Columns</span></a></li>
-                                                    <li><a href="index.php?p=shop-4-column"><span>Shop 4 Columns</span></a></li>
-                                                    <li><a href="index.php?p=shop-5-column"><span>Shop 5 Columns</span></a></li>
-                                                    <li><a href="index.php?p=shop-6-column"><span>Shop 6 Columns</span></a></li>
-                                                    <li><a href="index.php?p=shop-categories"><span>Shop Categories</span></a></li>
-                                                    <li><a href="index.php?p=shop-carousel"><span>Shop Carousel</span></a></li>
-                                                    <li><a href="index.php?p=shop-with-boder"><span>Shop With Border</span></a></li>
-                                                    <li><a href="index.php?p=shop-left-sidebar"><span>Shop Left Sidebar</span></a></li>
-                                                    <li><a href="index.php?p=shop-right-sidebar"><span>Shop Right Sidebar</span></a></li>
-                                                    <li><a href="index.php?p=shop-without-gutter"><span>Shop Without Gutter</span></a></li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <h2 class="page-list-title">Product Pages</h2>
-                                                <ul>
-                                                    <li><a href="index.php?=product-details"><span>Default</span></a></li>
-                                                    <li><a href="index.php?=product-simple"><span>Simple</span></a></li>
-                                                    <li><a href="index.php?=product-variable"><span>Variable</span></a></li>
-                                                    <li><a href="index.php?=product-groupped"><span>Groupped</span></a></li>
-                                                    <li><a href="index.php?=product-on-sale"><span>On Sale</span></a></li>
-                                                    <li><a href="index.php?=product-out-of-stock"><span>Out Of Stock</span></a></li>
-                                                    <li><a href="index.php?=product-affiliate"><span>Affiliate</span></a></li>
-                                                    <li><a href="index.php?=product-image-swatches"><span>Image Swatches</span></a></li>
-                                                    <li><a href="index.php?=product-countdown-timer"><span>With Countdown Timer</span></a></li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <h2 class="page-list-title">Other Pages</h2>
-                                                <ul>
-                                                    <li><a href="index.php?p=cart"><span>Cart</span></a></li>
-                                                    <li><a href="index.php?p=checkout"><span>Checkout</span></a></li>
-                                                    <li><a href="index.php?p=my-account"><span>My Account</span></a></li>
-                                                    <li><a href="index?p=wishlist"><span>Wishlist</span></a></li>
-                                                    <li><a href="index.php?p=order-tracking"><span>Order Tracking</span></a></li>
-                                                </ul>
-                                            </li>
-                                            <li>
-
-                                            </li>
-                                        </ul> -->
+                                        <a href="index.php?p=shop"><span>Shop</span></a>
                                     </li>
                                     <li class="has-children has-children--multilevel-submenu">
-
                                         <a href="index.php?p=about-us"><span>About Us</span></a>
-                                        <!-- multilevel submenu -->
-                                        <!-- <ul class="submenu">
-                                            <li><a href="index.php?p=about-us"><span>About Us</span></a></li>
-                                            <li><a href="index.php?p=contact-us"><span>Contact</span></a></li>
-                                            <li><a href="index.php?p=faq"><span>FAQ Pages</span></a></li>
-                                            <li><a href="index.php?p=coming-soon"><span>Coming Soon</span></a></li>
-                                            <li><a href="index.php?p=404-page"><span>404 Page</span></a></li>
-                                        </ul> -->
                                     </li>
                                     <li class="has-children has-children--multilevel-submenu">
                                         <a href="index.php?p=contact-us"><span>Contact Us</span></a>
                                     </li>
                                     <li class="has-children has-children--multilevel-submenu">
-                                        <a href="index.php?p=blog-listing"><span>Blog</span></a>
-                                        <!-- multilevel submenu -->
-                                        <!-- <ul class="submenu">
-                                            <li><a href="index.php?p=blog-grid"><span>Blog Grid</span></a></li>
-                                            <li><a href="index.php?p=blog-listing"><span>Blog List</span></a></li>
-                                            <li><a href="index.php?p=blog-masonry"><span>Blog Masonry</span></a></li>
-                                            <li><a href="index.php?p=blog-left-sidebar"><span>Blog Sidebar</span></a></li>
-                                            <li><a href="index.php?p=single-blog-post"><span>Single Post V1</span></a></li>
-                                            <li><a href="index.php?p=single-blog-post-2"><span>Single Post V2</span></a></li>
-                                        </ul> -->
+                                        <a href="index.php?p=blog-grid"><span>Blog</span></a>
                                     </li>
-
                                 </ul>
                             </nav>
                         </div>
@@ -152,10 +83,8 @@ if(!isset($_SESSION['customer_logged_in'])){
                             if($_SESSION['customer_logged_in']){
                                  if(isset($_SESSION['user_id'])){
                                     $user_id = $_SESSION['user_id'];
-                                    $sql = "SELECT * FROM users WHERE id='$user_id'";
-                                    $res = mysqli_query($conn, $sql);
-                                    $row = mysqli_fetch_assoc($res);
-                                    echo '<a href="index.php?p=my-account" class="header-cart">Welcome '.$row['username'].'</a>';
+                                    $user = getRows("users","id=$user_id");
+                                    echo '<a href="index.php?p=my-account" class="header-cart">Welcome '.$user['username'].'</a>';
                                 } 
                             }else{
                                 echo '<div class="header-right-items d-none d-md-block">
@@ -193,17 +122,31 @@ if(!isset($_SESSION['customer_logged_in'])){
             </div>
         </header>
         <!-- Header Bottom Wrap End -->
-
     </div>
     <!--====================  End of header area  ====================-->
     <div id="main-wrapper">
-        <?php  
-            if(isset($_GET['p'])){
-                $page = $_GET['p'];
-                include_once($page.'.php');
-            }else{
-                include_once('home.php');
+    <?php
+    $protected_pages = ['my-account', 'cart', 'checkout'];
+
+        if (isset($_GET['p'])) {
+            $page = basename($_GET['p']);
+            // echo $page;
+            // Check if the page is protected
+            if (in_array($page, $protected_pages) && !isset($_SESSION['customer_logged_in'])) {
+                header("Location: unauthorized.html");
+                exit;
             }
+
+            // If file exists, include it safely
+            $file = $page . '.php';
+            if (file_exists($file)) {
+                include_once($file);
+            } else {
+                echo "Page not found.";
+            }
+        } else {
+            include_once('home.php');
+        }
         ?>
     
     </div>
@@ -500,7 +443,7 @@ if(!isset($_SESSION['customer_logged_in'])){
                                     <a href="#"><span>Shop Pages</span></a>
                                     <ul class="sub-menu">
                                         <li><a href="index.php?p=shop-3-column"><span>Shop 3 Columns</span></a></li>
-                                        <li><a href="index.php?p=shop-4-column"><span>Shop 4 Columns</span></a></li>
+                                        <li><a href="index.php?p=shop"><span>Shop 4 Columns</span></a></li>
                                         <li><a href="index.php?p=shop-5-column"><span>Shop 5 Columns</span></a></li>
                                         <li><a href="index.php?p=shop-6-column"><span>Shop 6 Columns</span></a></li>
                                         <li><a href="index.php?p=shop-categories"><span>Shop Categories</span></a></li>
@@ -528,8 +471,8 @@ if(!isset($_SESSION['customer_logged_in'])){
                                 <li class="has-children">
                                     <a href="#"><span>Other Pages</span></a>
                                     <ul class="sub-menu">
-                                        <li><a href="index.php?p=cart"><span>Cart</span></a></li>
-                                        <li><a href="#" id="checkoutBtn"><span>Checkout</span></a></li>
+                                        <li><a id="viewCart"><span>Cart</span></a></li>
+                                        <li><a id="checkoutBtn"><span>Checkout</span></a></li>
                                         <li><a href="index.php?p=my-account"><span>My Account</span></a></li>
                                         <li><a href="index?p=wishlist"><span>Wishlist</span></a></li>
                                         <li><a href="index.php?p=order-tracking"><span>Order Tracking</span></a></li>
@@ -604,7 +547,7 @@ if(!isset($_SESSION['customer_logged_in'])){
                 <span class="ammount font-weight--reguler">$60.00</span>
             </div>
             <div class="minicart-btn_area">
-                <a href="index.php?p=cart" class="btn btn--full btn--border_1">View cart</a>
+                <a id="viewCart"  class="btn btn--full btn--border_1">View cart</a>
             </div>
             <div class="minicart-btn_area mcart">
                 <a id="checkoutBtn" class="btn btn--full btn--black">Checkout</a>
@@ -690,158 +633,11 @@ if(!isset($_SESSION['customer_logged_in'])){
     <!-- Plugins JS (Please remove the comment from below plugins.min.js for better website load performance and remove plugin js files from avobe) -->
 
     <script src="assets/js/plugins/plugins.js"></script>
-
-
     <!-- Main JS -->
     <script src="assets/js/main.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script>
-    function showToast(message) {
-        const toast = $('#toast');
-        toast.text(message).css('opacity', '1');
-
-        setTimeout(() => {
-            toast.css('opacity', '0');
-        }, 3000);
-    }
-    function loadCartCount() {
-        $.ajax({
-            url: 'ajax/get_cart_count.php',
-            type: 'GET',
-            dataType: 'json',
-            success: function (res) {
-                $('#cart-count').text(res.count);
-            }
-        });
-    }
-    // loadCartCount();
-
-    $(document).ready(function () {
-        // Login AJAX
-        $('#loginForm').submit(function (e) {
-            e.preventDefault();
-            $.ajax({
-                type: "POST",
-                url: "login.php",
-                data: $(this).serialize(),
-                dataType: "json",
-                success: function (response) {
-                    alert(response.message);
-                    if (response.status === 'success') {
-                        location.reload();
-                    }
-                }
-            });
-        });
-
-    // Register AJAX
-    $('#registerForm').submit(function (e) {
-        e.preventDefault();
-            $.ajax({
-                type: "POST",
-                url: "register.php",
-                data: $(this).serialize(),
-                dataType: "json",
-                success: function (response) {
-                    console.log(response);
-                    alert(response.message);
-                    if (response.status === 'success') {
-                        $('#tab_list_06').addClass('show active'); // Login tab
-                        $('#tab_list_07').removeClass('show active'); // Register tab
-                    }
-                }
-            });
-        });
-    });
-
-    function refreshMiniCart() {
-        $.ajax({
-            url: 'ajax/fetch_cart.php',
-            type: 'GET',
-            dataType: 'json',
-            success: function(res) {
-                $('.minicart-list').html(res.html);
-                $('.minicart-item_total .ammount').text('₹' + res.subtotal);
-                // Optional: Update cart icon count
-                $('#cart-count').text(res.count);
-            }
-        });
-    }
-    refreshMiniCart();
-
-    $(document).ready(function() {
-        $('.ajax-add-to-cart').on('click', function(e) {
-            e.preventDefault();
-
-            if ($(this).hasClass('disabled')) {
-                alert('This product is out of stock!');
-                return false;
-            }
-
-            let productId = $(this).data('id');
-
-            $.ajax({
-                url: 'ajax/add_to_cart.php',
-                type: 'POST',
-                data: {
-                    product_id: productId,
-                    quantity: 1
-                },
-                dataType: 'json',
-                success: function(response) {
-                    if (response.status === 'success') {
-                        alert('Product added to cart!');
-                        refreshMiniCart();
-                        loadCartCount();
-                        // Optionally update cart count badge:
-                        $('#cart-count').text(response.cart_count);
-                    } else {
-                        alert('Something went wrong!');
-                    }
-                },
-                error: function() {
-                    alert('Error processing request.');
-                }
-            });
-        });
-    });
-    // Remove item from minicart
-    $(document).on('click', '.product-item_remove', function () {
-        let product_id = $(this).data('id');
-
-        $.ajax({
-            url: 'ajax/remove_from_cart.php',
-            type: 'POST',
-            data: { product_id: product_id },
-            dataType: 'json',
-            success: function (response) {
-                if (response.status === 'success') {
-                    showToast('Product removed from cart');
-                    refreshMiniCart(); // reload minicart
-                    loadCartCount();
-                }
-            }
-        });
-    });
-
-</script>
-<script>
-
-    $(document).ready(function() {
-        $(document).on('click', '#checkoutBtn', function () {
-            var isLoggedIn = <?php echo isset($_SESSION['customer_logged_in']) && $_SESSION['customer_logged_in'] == true ? 'true' : 'false'; ?>;
-            // console.log('Login Status:', isLoggedIn); // Debug line
-            if (isLoggedIn) {
-                window.location.href = 'index.php?p=checkout';
-            } else {
-                $('#exampleModal').modal('show');
-                $("#miniCart").removeClass("open");
-                $(".global-overlay").removeClass("overlay-open");
-            }
-        });
-    });
-</script>
+    <?php include 'ajax/allajax.php'; ?>
 
 </body>
 </html>

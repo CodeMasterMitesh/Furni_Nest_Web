@@ -7,22 +7,15 @@ $db_user  = "root";              // your DB username
 $db_pass  = "";                  // your DB password
 $db_name  = "furni_nest_db";     // your selected DB
 
-// Create connection
-$conn = mysqli_connect($host, $db_user, $db_pass, $db_name);
-
-// Check connection
-if (!$conn) {
-    // echo "error";
-    die("Database connection failed: " . mysqli_connect_error());
-}else{
-
-    // echo "Connected successfully to db";
+try {
+    // Create connection
+    $conn = mysqli_connect($host, $db_user, $db_pass, $db_name);
+    // Set charset (optional but recommended)
+    mysqli_set_charset($conn, "utf8mb4");
+} catch (mysqli_sql_exception $e) {
+    include 'connection_error.php';
+    exit;
 }
-
-// Set charset (optional but recommended)
-mysqli_set_charset($conn, "utf8mb4");
-
-// Optional: For debugging connection
 
 /**
  * Function to close the DB connection.
@@ -67,6 +60,34 @@ function createDropdown($selectName, $table, $valueField, $displayField, $select
     }
     $dropdown .= "</select>";
     return $dropdown;
+}
+
+function getRows($table, $condition = '') {
+    global $conn;
+    $query = "SELECT * FROM $table";
+    if ($condition != '') {
+        $query .= " WHERE $condition";
+    }
+
+    $result = mysqli_query($conn, $query);
+    $data = [];
+
+    while ($row = mysqli_fetch_assoc($result)) {
+        $data[] = $row; // Append each row to the $data array
+    }
+
+    return $data; // Returns array of all rows
+}
+
+function getsingleRow($table, $condition = '') {
+    global $conn;
+    $query = "SELECT * FROM $table";
+    if($condition != ''){
+        $query .= " WHERE $condition";
+    }
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_assoc($result);
+    return $row;
 }
 
 // $password = password_hash("admin123", PASSWORD_DEFAULT);

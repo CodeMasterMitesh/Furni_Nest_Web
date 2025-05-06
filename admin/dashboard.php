@@ -8,7 +8,7 @@ $orderStats = getOrderStats($conn);
 <div class="content">
 <div class="wrapper d-flex flex-column min-vh-100">
   <main class="flex-grow-1">
-    <div class="container mt-4">
+    <div class="container-fluid mt-4">
 
       <!-- First Row -->
       <div class="row g-4 mb-4">
@@ -33,6 +33,13 @@ $orderStats = getOrderStats($conn);
         <i class="bi bi-calendar-range card-icon"></i>
       </div>
     </div>
+    <div class="col-md-3">
+          <div class="dashboard-card bg-gradient-secondary">
+            <h6>Total Customers</h6>
+            <div class="value">120</div>
+            <i class="bi bi-people card-icon"></i>
+          </div>
+        </div>
 </div>
 
       <!-- Second Row -->
@@ -58,17 +65,6 @@ $orderStats = getOrderStats($conn);
             <i class="bi bi-cart-check card-icon"></i>
           </div>
         </div>
-        
-      </div>
-      
-      <div class="row g-4 mb-4">
-        <div class="col-md-3">
-          <div class="dashboard-card bg-gradient-secondary">
-            <h6>Total Customers</h6>
-            <div class="value">120</div>
-            <i class="bi bi-people card-icon"></i>
-          </div>
-        </div>
         <div class="col-md-3">
           <div class="dashboard-card bg-gradient-success">
             <h6>Total Products</h6>
@@ -77,6 +73,7 @@ $orderStats = getOrderStats($conn);
           </div>
         </div>
       </div>
+      
 
       <!-- Chart -->
       <div class="row mb-5">

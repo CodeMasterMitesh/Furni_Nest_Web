@@ -15,7 +15,7 @@
                                         <h1>Chanel Chair <br> High Quality Walnut</h1>
 
                                         <div class="button-box section-space--mt_60">
-                                            <a href="index.php?p=shop-4-column" class="text-btn-normal font-weight--reguler font-lg-p">Discover Collection <i class="icon-arrow-right"></i></a>
+                                            <a href="index.php?p=shop" class="text-btn-normal font-weight--reguler font-lg-p">Discover Collection <i class="icon-arrow-right"></i></a>
                                         </div>
                                     </div>
                                     <div class="inner-images">
@@ -44,7 +44,7 @@
                                         <h1>Flower Vase <br>  Made Of Ceramic</h1>
 
                                         <div class="button-box section-space--mt_60">
-                                            <a href="index.php?p=shop-4-column" class="text-btn-normal font-weight--reguler font-lg-p">Discover Collection <i class="icon-arrow-right"></i></a>
+                                            <a href="index.php?p=shop" class="text-btn-normal font-weight--reguler font-lg-p">Discover Collection <i class="icon-arrow-right"></i></a>
                                         </div>
                                     </div>
                                     <div class="inner-images">
@@ -115,15 +115,7 @@
                         </div>
                         <div class="col-lg-9">
                             <?php 
-                                $categories = [];
-                                $cat_query = mysqli_query($conn, "SELECT * FROM categories");
-                                while ($row = mysqli_fetch_assoc($cat_query)) {
-                                    $categories[] = $row;
-                                    // echo "<pre>";
-                                    // print_r($categories);
-                                    // echo "</pre>";
-                                }
-                                // exit;
+                                $categories = getRows("categories");
                                 ?>
                             <ul class="nav product-tab-menu justify-content-lg-end justify-content-center" role="tablist">
                                 <li class="tab__item nav-item active">
@@ -144,11 +136,8 @@
                             <div class="product-slider-active">
                                 <!-- Single Product Item Start -->
                                 <?php
-                                    $all_query = mysqli_query($conn, "SELECT * FROM products");
-                                    while ($product = mysqli_fetch_assoc($all_query)) {
-                                        // echo "<pre>";
-                                        // print_r($product);
-                                        // echo "</pre>";
+                                        $products = getRows("products");
+                                        foreach($products as $index => $product) {
                                         ?>
                                         <div class="single-product-item text-center">
                                         <div class="products-images">
@@ -181,7 +170,6 @@
                                     </div>
                                     <?php
                                     }
-                                    // exit;
                                 ?>
                                 <!-- Single Product Item End -->
                             </div>
@@ -191,8 +179,8 @@
                             <div class="product-slider-active">
                                 <?php
                                 $cat_id = $cat['id'];
-                                $product_query = mysqli_query($conn, "SELECT * FROM products WHERE category_id = $cat_id");
-                                while ($product = mysqli_fetch_assoc($product_query)) {
+                                $product_query = getRows("products");
+                                foreach($product_query as $index => $product) {
                                     include 'product-card.php';
                                 }
                                 ?>
@@ -219,7 +207,7 @@
                                             </div>
                                             <p class="font-lg-p">Free shipping over $125 for international orders</p>
                                             <div class="button-box section-space--mt_60">
-                                                <a href="index.php?p=shop-4-column" class="text-btn-normal font-weight--bold font-lg-p">Discover now <i class="icon-arrow-right"></i></a>
+                                                <a href="index.php?p=shop" class="text-btn-normal font-weight--bold font-lg-p">Discover now <i class="icon-arrow-right"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -235,8 +223,6 @@
             <!-- Product Area Start -->
             <div class="product-wrapper section-space--ptb_120">
                 <div class="container">
-
-
                     <div class="row align-items-center">
                         <div class="col-lg-3">
                             <div class="section-title text-lg-start text-center mb-20">
@@ -263,11 +249,7 @@
                             <!-- product-slider-active -->
                             <div class="row">
                             <?php
-                                    $all_query = mysqli_query($conn, "SELECT * FROM products");
-                                    while ($product = mysqli_fetch_assoc($all_query)) {
-                                        // echo "<pre>";
-                                        // print_r($product);
-                                        // echo "</pre>";
+                                    foreach($products as $index => $product){
                                         ?>
                                         <div class="col-lg-3 col-md-4 col-sm-6">
                                         <div class="single-product-item text-center">
@@ -306,518 +288,6 @@
                                 ?>
                             </div>
                         </div>
-                        <div class="tab-pane" id="tab_list_12">
-                            <div class="row ">
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <!-- Single Product Item Start -->
-                                    <div class="single-product-item text-center">
-                                        <div class="products-images">
-                                            <a href="index.php?p=product-details" class="product-thumbnail">
-                                                <img src="assets/images/product/1_1-300x300.webp" class="img-fluid" alt="Product Images" width="300" height="300">
-
-                                                <span class="ribbon out-of-stock ">
-                                                Out Of Stock
-                                            </span>
-                                            </a>
-                                            <div class="product-actions">
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#prodect-modal"><i class="p-icon icon-plus"></i><span class="tool-tip">Quick View</span></a>
-                                                <a href="index.php?p=product-details"><i class="p-icon icon-bag2"></i> <span class="tool-tip">Add to cart</span></a>
-                                                <a href="index.php?p=wishlist"><i class="p-icon icon-heart"></i> <span class="tool-tip">Browse Wishlist</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-content">
-                                            <h6 class="prodect-title"><a href="index.php?p=product-details">Teapot with black tea</a></h6>
-                                            <div class="prodect-price">
-                                                <span class="new-price">£40.00</span> - <span class="old-price"> £635.00</span>
-                                            </div>
-                                        </div>
-                                    </div><!-- Single Product Item End -->
-                                </div>
-
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <!-- Single Product Item Start -->
-                                    <div class="single-product-item text-center">
-                                        <div class="products-images">
-                                            <a href="index.php?p=product-details" class="product-thumbnail">
-                                                <img src="assets/images/product/1_9-300x300.webp" class="img-fluid" alt="Product Images" width="300" height="300">
-
-                                            </a>
-                                            <div class="product-actions">
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#prodect-modal"><i class="p-icon icon-plus"></i><span class="tool-tip">Quick View</span></a>
-                                                <a href="index.php?p=product-details"><i class="p-icon icon-bag2"></i> <span class="tool-tip">Add to cart</span></a>
-                                                <a href="index.php?p=wishlist"><i class="p-icon icon-heart"></i> <span class="tool-tip">Browse Wishlist</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-content">
-                                            <h6 class="prodect-title"><a href="index.php?p=product-details">Teapot with black tea</a></h6>
-                                            <div class="prodect-price">
-                                                <span class="new-price">£20.00</span> - <span class="old-price"> £135.00</span>
-                                            </div>
-                                        </div>
-                                    </div><!-- Single Product Item End -->
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="tab_list_13">
-                            <div class="row ">
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <!-- Single Product Item Start -->
-                                    <div class="single-product-item text-center">
-                                        <div class="products-images">
-                                            <a href="index.php?p=product-details" class="product-thumbnail">
-                                                <img src="assets/images/product/1_2-300x300.webp" class="img-fluid" alt="Product Images" width="300" height="300">
-
-                                            </a>
-                                            <div class="product-actions">
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#prodect-modal"><i class="p-icon icon-plus"></i><span class="tool-tip">Quick View</span></a>
-                                                <a href="index.php?p=product-details"><i class="p-icon icon-bag2"></i> <span class="tool-tip">Add to cart</span></a>
-                                                <a href="index.php?p=wishlist"><i class="p-icon icon-heart"></i> <span class="tool-tip">Browse Wishlist</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-content">
-                                            <h6 class="prodect-title"><a href="index.php?p=product-details">Simple Chair</a></h6>
-                                            <div class="prodect-price">
-                                                <span class="new-price">£40.00</span> - <span class="old-price"> £45.00</span>
-                                            </div>
-                                        </div>
-                                    </div><!-- Single Product Item End -->
-                                </div>
-
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <!-- Single Product Item Start -->
-                                    <div class="single-product-item text-center">
-                                        <div class="products-images">
-                                            <a href="index.php?p=product-details" class="product-thumbnail">
-                                                <img src="assets/images/product/10-300x300.webp" class="img-fluid" alt="Product Images" width="300" height="300">
-
-                                            </a>
-                                            <div class="product-actions">
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#prodect-modal"><i class="p-icon icon-plus"></i><span class="tool-tip">Quick View</span></a>
-                                                <a href="index.php?p=product-details"><i class="p-icon icon-bag2"></i> <span class="tool-tip">Add to cart</span></a>
-                                                <a href="index.php?p=wishlist"><i class="p-icon icon-heart"></i> <span class="tool-tip">Browse Wishlist</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-content">
-                                            <h6 class="prodect-title"><a href="index.php?p=product-details">Gray nancy chair</a></h6>
-                                            <div class="prodect-price">
-                                                <span class="new-price">£70.00</span>
-                                            </div>
-                                        </div>
-                                    </div><!-- Single Product Item End -->
-                                </div>
-
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <!-- Single Product Item Start -->
-                                    <div class="single-product-item text-center">
-                                        <div class="products-images">
-                                            <a href="index.php?p=product-details" class="product-thumbnail">
-                                                <img src="assets/images/product/11-300x300.webp" class="img-fluid" alt="Product Images" width="300" height="300">
-
-                                            </a>
-                                            <div class="product-actions">
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#prodect-modal"><i class="p-icon icon-plus"></i><span class="tool-tip">Quick View</span></a>
-                                                <a href="index.php?p=product-details"><i class="p-icon icon-bag2"></i> <span class="tool-tip">Add to cart</span></a>
-                                                <a href="index.php?p=wishlist"><i class="p-icon icon-heart"></i> <span class="tool-tip">Browse Wishlist</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-content">
-                                            <h6 class="prodect-title"><a href="index.php?p=product-details">Wooden chair</a></h6>
-                                            <div class="prodect-price">
-                                                <span class="new-price">£80.00</span> - <span class="old-price"> £195.00</span>
-                                            </div>
-                                        </div>
-                                    </div><!-- Single Product Item End -->
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="tab_list_14">
-                            <div class="row">
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <!-- Single Product Item Start -->
-                                    <div class="single-product-item text-center">
-                                        <div class="products-images">
-                                            <a href="index.php?p=product-details" class="product-thumbnail">
-                                                <img src="assets/images/product/1_1-300x300.webp" class="img-fluid" alt="Product Images" width="300" height="300">
-
-                                                <span class="ribbon out-of-stock ">
-                                                Out Of Stock
-                                            </span>
-                                            </a>
-                                            <div class="product-actions">
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#prodect-modal"><i class="p-icon icon-plus"></i><span class="tool-tip">Quick View</span></a>
-                                                <a href="index.php?p=product-details"><i class="p-icon icon-bag2"></i> <span class="tool-tip">Add to cart</span></a>
-                                                <a href="index.php?p=wishlist"><i class="p-icon icon-heart"></i> <span class="tool-tip">Browse Wishlist</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-content">
-                                            <h6 class="prodect-title"><a href="index.php?p=product-details">Teapot with black tea</a></h6>
-                                            <div class="prodect-price">
-                                                <span class="new-price">£40.00</span> - <span class="old-price"> £635.00</span>
-                                            </div>
-                                        </div>
-                                    </div><!-- Single Product Item End -->
-                                </div>
-
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <!-- Single Product Item Start -->
-                                    <div class="single-product-item text-center">
-                                        <div class="products-images">
-                                            <a href="index.php?p=product-details" class="product-thumbnail">
-                                                <img src="assets/images/product/1_2-300x300.webp" class="img-fluid" alt="Product Images" width="300" height="300">
-
-                                            </a>
-                                            <div class="product-actions">
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#prodect-modal"><i class="p-icon icon-plus"></i><span class="tool-tip">Quick View</span></a>
-                                                <a href="index.php?p=product-details"><i class="p-icon icon-bag2"></i> <span class="tool-tip">Add to cart</span></a>
-                                                <a href="index.php?p=wishlist"><i class="p-icon icon-heart"></i> <span class="tool-tip">Browse Wishlist</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-content">
-                                            <h6 class="prodect-title"><a href="index.php?p=product-details">Simple Chair</a></h6>
-                                            <div class="prodect-price">
-                                                <span class="new-price">£70.00</span> - <span class="old-price"> £95.00</span>
-                                            </div>
-                                        </div>
-                                    </div><!-- Single Product Item End -->
-                                </div>
-
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <!-- Single Product Item Start -->
-                                    <div class="single-product-item text-center">
-                                        <div class="products-images">
-                                            <a href="index.php?p=product-details" class="product-thumbnail">
-                                                <img src="assets/images/product/1_3-300x300.webp" class="img-fluid" alt="Product Images" width="300" height="300">
-
-                                            </a>
-                                            <div class="product-actions">
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#prodect-modal"><i class="p-icon icon-plus"></i><span class="tool-tip">Quick View</span></a>
-                                                <a href="index.php?p=product-details"><i class="p-icon icon-bag2"></i> <span class="tool-tip">Add to cart</span></a>
-                                                <a href="index.php?p=wishlist"><i class="p-icon icon-heart"></i> <span class="tool-tip">Browse Wishlist</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-content">
-                                            <h6 class="prodect-title"><a href="index.php?p=product-details">Smooth Disk</a></h6>
-                                            <div class="prodect-price">
-                                                <span class="new-price">£46.00</span>
-                                            </div>
-                                        </div>
-                                    </div><!-- Single Product Item End -->
-                                </div>
-
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <!-- Single Product Item Start -->
-                                    <div class="single-product-item text-center">
-                                        <div class="products-images">
-                                            <a href="index.php?p=product-details" class="product-thumbnail">
-                                                <img src="assets/images/product/1_4-300x300.webp" class="img-fluid" alt="Product Images" width="300" height="300">
-
-                                                <span class="ribbon onsale">
-                                            -14%
-                                            </span>
-                                            </a>
-                                            <div class="product-actions">
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#prodect-modal"><i class="p-icon icon-plus"></i><span class="tool-tip">Quick View</span></a>
-                                                <a href="index.php?p=product-details"><i class="p-icon icon-bag2"></i> <span class="tool-tip">Add to cart</span></a>
-                                                <a href="index.php?p=wishlist"><i class="p-icon icon-heart"></i> <span class="tool-tip">Browse Wishlist</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-content">
-                                            <h6 class="prodect-title"><a href="index.php?p=product-details">Wooden Flowerpot</a></h6>
-                                            <div class="prodect-price">
-                                                <span class="new-price">£40.00</span> - <span class="old-price"> £635.00</span>
-                                            </div>
-                                        </div>
-                                    </div><!-- Single Product Item End -->
-                                </div>
-
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <!-- Single Product Item Start -->
-                                    <div class="single-product-item text-center">
-                                        <div class="products-images">
-                                            <a href="index.php?p=product-details" class="product-thumbnail">
-                                                <img src="assets/images/product/1_5-300x300.webp" class="img-fluid" alt="Product Images" width="300" height="300">
-
-                                            </a>
-                                            <div class="product-actions">
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#prodect-modal"><i class="p-icon icon-plus"></i><span class="tool-tip">Quick View</span></a>
-                                                <a href="index.php?p=product-details"><i class="p-icon icon-bag2"></i> <span class="tool-tip">Add to cart</span></a>
-                                                <a href="index.php?p=wishlist"><i class="p-icon icon-heart"></i> <span class="tool-tip">Browse Wishlist</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-content">
-                                            <h6 class="prodect-title"><a href="index.php?p=product-details">Living room & Bedroom lights</a></h6>
-                                            <div class="prodect-price">
-                                                <span class="new-price">£60.00</span> - <span class="old-price"> £69.00</span>
-                                            </div>
-                                        </div>
-                                    </div><!-- Single Product Item End -->
-                                </div>
-
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <!-- Single Product Item Start -->
-                                    <div class="single-product-item text-center">
-                                        <div class="products-images">
-                                            <a href="index.php?p=product-details" class="product-thumbnail">
-                                                <img src="assets/images/product/1_6-300x300.webp" class="img-fluid" alt="Product Images" width="300" height="300">
-
-                                            </a>
-                                            <div class="product-actions">
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#prodect-modal"><i class="p-icon icon-plus"></i><span class="tool-tip">Quick View</span></a>
-                                                <a href="index.php?p=product-details"><i class="p-icon icon-bag2"></i> <span class="tool-tip">Add to cart</span></a>
-                                                <a href="index.php?p=wishlist"><i class="p-icon icon-heart"></i> <span class="tool-tip">Browse Wishlist</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-content">
-                                            <h6 class="prodect-title"><a href="index.php?p=product-details">Gray lamp</a></h6>
-                                            <div class="prodect-price">
-                                                <span class="new-price">£80.00</span>
-                                            </div>
-                                        </div>
-                                    </div><!-- Single Product Item End -->
-                                </div>
-
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <!-- Single Product Item Start -->
-                                    <div class="single-product-item text-center">
-                                        <div class="products-images">
-                                            <a href="index.php?p=product-details" class="product-thumbnail">
-                                                <img src="assets/images/product/1_7-300x300.webp" class="img-fluid" alt="Product Images" width="300" height="300">
-
-                                            </a>
-                                            <div class="product-actions">
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#prodect-modal"><i class="p-icon icon-plus"></i><span class="tool-tip">Quick View</span></a>
-                                                <a href="index.php?p=product-details"><i class="p-icon icon-bag2"></i> <span class="tool-tip">Add to cart</span></a>
-                                                <a href="index.php?p=wishlist"><i class="p-icon icon-heart"></i> <span class="tool-tip">Browse Wishlist</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-content">
-                                            <h6 class="prodect-title"><a href="index.php?p=product-details">Decoration wood</a></h6>
-                                            <div class="prodect-price">
-                                                <span class="new-price">£50.00</span>
-                                            </div>
-                                        </div>
-                                    </div><!-- Single Product Item End -->
-                                </div>
-
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <!-- Single Product Item Start -->
-                                    <div class="single-product-item text-center">
-                                        <div class="products-images">
-                                            <a href="index.php?p=product-details" class="product-thumbnail">
-                                                <img src="assets/images/product/1_8-300x300.webp" class="img-fluid" alt="Product Images" width="300" height="300">
-
-                                            </a>
-                                            <div class="product-actions">
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#prodect-modal"><i class="p-icon icon-plus"></i><span class="tool-tip">Quick View</span></a>
-                                                <a href="index.php?p=product-details"><i class="p-icon icon-bag2"></i> <span class="tool-tip">Add to cart</span></a>
-                                                <a href="index.php?p=wishlist"><i class="p-icon icon-heart"></i> <span class="tool-tip">Browse Wishlist</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-content">
-                                            <h6 class="prodect-title"><a href="index.php?p=product-details">Teapot with black tea</a></h6>
-                                            <div class="prodect-price">
-                                                <span class="new-price">£20.00</span> - <span class="old-price"> £135.00</span>
-                                            </div>
-                                        </div>
-                                    </div><!-- Single Product Item End -->
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="tab_list_15">
-                            <div class="row">
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <!-- Single Product Item Start -->
-                                    <div class="single-product-item text-center">
-                                        <div class="products-images">
-                                            <a href="index.php?p=product-details" class="product-thumbnail">
-                                                <img src="assets/images/product/1_3-300x300.webp" class="img-fluid" alt="Product Images" width="300" height="300">
-
-                                            </a>
-                                            <div class="product-actions">
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#prodect-modal"><i class="p-icon icon-plus"></i><span class="tool-tip">Quick View</span></a>
-                                                <a href="index.php?p=product-details"><i class="p-icon icon-bag2"></i> <span class="tool-tip">Add to cart</span></a>
-                                                <a href="index.php?p=wishlist"><i class="p-icon icon-heart"></i> <span class="tool-tip">Browse Wishlist</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-content">
-                                            <h6 class="prodect-title"><a href="index.php?p=product-details">Smooth Disk</a></h6>
-                                            <div class="prodect-price">
-                                                <span class="new-price">£46.00</span>
-                                            </div>
-                                        </div>
-                                    </div><!-- Single Product Item End -->
-                                </div>
-
-
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <!-- Single Product Item Start -->
-                                    <div class="single-product-item text-center">
-                                        <div class="products-images">
-                                            <a href="index.php?p=product-details" class="product-thumbnail">
-                                                <img src="assets/images/product/1_6-300x300.webp" class="img-fluid" alt="Product Images" width="300" height="300">
-
-                                            </a>
-                                            <div class="product-actions">
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#prodect-modal"><i class="p-icon icon-plus"></i><span class="tool-tip">Quick View</span></a>
-                                                <a href="index.php?p=product-details"><i class="p-icon icon-bag2"></i> <span class="tool-tip">Add to cart</span></a>
-                                                <a href="index.php?p=wishlist"><i class="p-icon icon-heart"></i> <span class="tool-tip">Browse Wishlist</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-content">
-                                            <h6 class="prodect-title"><a href="index.php?p=product-details">Gray lamp</a></h6>
-                                            <div class="prodect-price">
-                                                <span class="new-price">£80.00</span>
-                                            </div>
-                                        </div>
-                                    </div><!-- Single Product Item End -->
-                                </div>
-
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <!-- Single Product Item Start -->
-                                    <div class="single-product-item text-center">
-                                        <div class="products-images">
-                                            <a href="index.php?p=product-details" class="product-thumbnail">
-                                                <img src="assets/images/product/1_7-300x300.webp" class="img-fluid" alt="Product Images" width="300" height="300">
-
-                                            </a>
-                                            <div class="product-actions">
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#prodect-modal"><i class="p-icon icon-plus"></i><span class="tool-tip">Quick View</span></a>
-                                                <a href="index.php?p=product-details"><i class="p-icon icon-bag2"></i> <span class="tool-tip">Add to cart</span></a>
-                                                <a href="index.php?p=wishlist"><i class="p-icon icon-heart"></i> <span class="tool-tip">Browse Wishlist</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-content">
-                                            <h6 class="prodect-title"><a href="index.php?p=product-details">Decoration wood</a></h6>
-                                            <div class="prodect-price">
-                                                <span class="new-price">£50.00</span>
-                                            </div>
-                                        </div>
-                                    </div><!-- Single Product Item End -->
-                                </div>
-
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <!-- Single Product Item Start -->
-                                    <div class="single-product-item text-center">
-                                        <div class="products-images">
-                                            <a href="index.php?p=product-details" class="product-thumbnail">
-                                                <img src="assets/images/product/1_8-300x300.webp" class="img-fluid" alt="Product Images" width="300" height="300">
-
-                                            </a>
-                                            <div class="product-actions">
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#prodect-modal"><i class="p-icon icon-plus"></i><span class="tool-tip">Quick View</span></a>
-                                                <a href="index.php?p=product-details"><i class="p-icon icon-bag2"></i> <span class="tool-tip">Add to cart</span></a>
-                                                <a href="index.php?p=wishlist"><i class="p-icon icon-heart"></i> <span class="tool-tip">Browse Wishlist</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-content">
-                                            <h6 class="prodect-title"><a href="index.php?p=product-details">Teapot with black tea</a></h6>
-                                            <div class="prodect-price">
-                                                <span class="new-price">£20.00</span> - <span class="old-price"> £135.00</span>
-                                            </div>
-                                        </div>
-                                    </div><!-- Single Product Item End -->
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="tab_list_16">
-                            <div class="row">
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <!-- Single Product Item Start -->
-                                    <div class="single-product-item text-center">
-                                        <div class="products-images">
-                                            <a href="index.php?p=product-details" class="product-thumbnail">
-                                                <img src="assets/images/product/1_7-300x300.webp" class="img-fluid" alt="Product Images" width="300" height="300">
-
-                                            </a>
-                                            <div class="product-actions">
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#prodect-modal"><i class="p-icon icon-plus"></i><span class="tool-tip">Quick View</span></a>
-                                                <a href="index.php?p=product-details"><i class="p-icon icon-bag2"></i> <span class="tool-tip">Add to cart</span></a>
-                                                <a href="index.php?p=wishlist"><i class="p-icon icon-heart"></i> <span class="tool-tip">Browse Wishlist</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-content">
-                                            <h6 class="prodect-title"><a href="index.php?p=product-details">Decoration wood</a></h6>
-                                            <div class="prodect-price">
-                                                <span class="new-price">£50.00</span>
-                                            </div>
-                                        </div>
-                                    </div><!-- Single Product Item End -->
-                                </div>
-
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <!-- Single Product Item Start -->
-                                    <div class="single-product-item text-center">
-                                        <div class="products-images">
-                                            <a href="index.php?p=product-details" class="product-thumbnail">
-                                                <img src="assets/images/product/1_8-300x300.webp" class="img-fluid" alt="Product Images" width="300" height="300">
-
-                                            </a>
-                                            <div class="product-actions">
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#prodect-modal"><i class="p-icon icon-plus"></i><span class="tool-tip">Quick View</span></a>
-                                                <a href="index.php?p=product-details"><i class="p-icon icon-bag2"></i> <span class="tool-tip">Add to cart</span></a>
-                                                <a href="index.php?p=wishlist"><i class="p-icon icon-heart"></i> <span class="tool-tip">Browse Wishlist</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-content">
-                                            <h6 class="prodect-title"><a href="index.php?p=product-details">Teapot with black tea</a></h6>
-                                            <div class="prodect-price">
-                                                <span class="new-price">£20.00</span> - <span class="old-price"> £135.00</span>
-                                            </div>
-                                        </div>
-                                    </div><!-- Single Product Item End -->
-                                </div>
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <!-- Single Product Item Start -->
-                                    <div class="single-product-item text-center">
-                                        <div class="products-images">
-                                            <a href="index.php?p=product-details" class="product-thumbnail">
-                                                <img src="assets/images/product/1_4-300x300.webp" class="img-fluid" alt="Product Images" width="300" height="300">
-
-                                                <span class="ribbon onsale">
-                                            -14%
-                                            </span>
-                                            </a>
-                                            <div class="product-actions">
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#prodect-modal"><i class="p-icon icon-plus"></i><span class="tool-tip">Quick View</span></a>
-                                                <a href="index.php?p=product-details"><i class="p-icon icon-bag2"></i> <span class="tool-tip">Add to cart</span></a>
-                                                <a href="index.php?p=wishlist"><i class="p-icon icon-heart"></i> <span class="tool-tip">Browse Wishlist</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-content">
-                                            <h6 class="prodect-title"><a href="index.php?p=product-details">Wooden Flowerpot</a></h6>
-                                            <div class="prodect-price">
-                                                <span class="new-price">£40.00</span> - <span class="old-price"> £635.00</span>
-                                            </div>
-                                        </div>
-                                    </div><!-- Single Product Item End -->
-                                </div>
-
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <!-- Single Product Item Start -->
-                                    <div class="single-product-item text-center">
-                                        <div class="products-images">
-                                            <a href="index.php?p=product-details" class="product-thumbnail">
-                                                <img src="assets/images/product/1_5-300x300.webp" class="img-fluid" alt="Product Images" width="300" height="300">
-
-                                            </a>
-                                            <div class="product-actions">
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#prodect-modal"><i class="p-icon icon-plus"></i><span class="tool-tip">Quick View</span></a>
-                                                <a href="index.php?p=product-details"><i class="p-icon icon-bag2"></i> <span class="tool-tip">Add to cart</span></a>
-                                                <a href="index.php?p=wishlist"><i class="p-icon icon-heart"></i> <span class="tool-tip">Browse Wishlist</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-content">
-                                            <h6 class="prodect-title"><a href="index.php?p=product-details">Living room & Bedroom lights</a></h6>
-                                            <div class="prodect-price">
-                                                <span class="new-price">£60.00</span> - <span class="old-price"> £69.00</span>
-                                            </div>
-                                        </div>
-                                    </div><!-- Single Product Item End -->
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
 
                 </div>
