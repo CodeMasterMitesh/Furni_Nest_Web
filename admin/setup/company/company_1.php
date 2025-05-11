@@ -1,10 +1,9 @@
-<?php include('../partition/header.php'); ?>
+<?php include('../../partition/header.php'); ?>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
 
 <style>
-    <style>
   body {
-    font-size: 13px;
+    font-size: 10px;
     background-color: #f8f9fa;
   }
 
@@ -19,9 +18,13 @@
   }
 
   .card {
-    margin: 20px;
+    /* margin: 20px; */
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    min-height:100vh;
+  }
+  .card-body{
+    padding : 0px !important;
   }
   
   .breadcrumb {
@@ -49,7 +52,7 @@
   </div>
 
   <div class="card-body table-responsive">
-    <table class="table table-bordered table-sm table-hover align-middle">
+    <table id="companyTable" class="table table-bordered table-sm table-hover align-middle">
       <thead class="table-light">
         <tr>
           <th><input type="checkbox" /></th>
@@ -121,19 +124,34 @@
     </div>
   </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+<!-- jQuery -->
+<?php include('../../partition/footer.php'); ?>
+
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 
 <script>
-$(document).ready(function() {
-    $('table').DataTable({
-      paging: true,
-      searching: true,
-      info: false
-    });
+$(document).ready(function () {
+  // Move the second row of the thead (filter row) into a <tfoot> for compatibility
+  // $('#companyTable thead tr:eq(1)').clone(true).appendTo('#companyTable thead');
+
+  var table = $('#companyTable').DataTable({
+    orderCellsTop: true,
+    fixedHeader: true,
+    initComplete: function () {
+      var api = this.api();
+      api.columns().every(function (i) {
+        $('input', api.columns(i).header()).on('keyup change', function () {
+          if (api.column(i).search() !== this.value) {
+            api.column(i).search(this.value).draw();
+          }
+        });
+      });
+    }
+  });
 });
 </script>
-<script>
+<!-- <script>
   document.getElementById('searchInput').addEventListener('keyup', function () {
     let filter = this.value.toLowerCase();
     let rows = document.querySelectorAll('#companyTable tr');
@@ -142,5 +160,4 @@ $(document).ready(function() {
       row.style.display = text.includes(filter) ? '' : 'none';
     });
   });
-</script>
-<?php include('../partition/footer.php'); ?>
+</script> -->

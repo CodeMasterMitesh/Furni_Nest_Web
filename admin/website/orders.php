@@ -1,4 +1,4 @@
-<?php include('partition/header.php');
+<?php include('../partition/header.php');
 $order_query = "SELECT o.id AS order_id, u.first_name AS customer_name, o.total_price, o.status, o.created_at
                 FROM orders o
                 JOIN users u ON o.user_id = u.id
@@ -9,7 +9,7 @@ $order_result = mysqli_query($conn, $order_query);
 
 <div class="wrapper d-flex flex-column min-vh-100">
     <main class="flex-grow-1">
-        <div class="container mt-4">
+        <div class="container-fluid mt-4">
             <h3>Orders</h3>
             <table class="table table-bordered">
                 <thead class="table-dark">
@@ -59,4 +59,4 @@ $order_result = mysqli_query($conn, $order_query);
         </div>
     </main>
 </div>
-<?php include('partition/footer.php'); ?>
+<?php include('../partition/footer.php'); ?>

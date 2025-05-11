@@ -1,5 +1,5 @@
 <?php 
-include('../partition/header.php');
+include('../../partition/header.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $companyData = [];
@@ -102,4 +102,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
   </main>
 </div>
-<?php include('../partition/footer.php'); ?>
+<?php include('../../partition/footer.php'); ?>

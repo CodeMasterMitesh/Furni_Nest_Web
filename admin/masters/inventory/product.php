@@ -1,7 +1,7 @@
 <?php include('../../partition/header.php'); ?>
 <div class="wrapper d-flex flex-column min-vh-100">
     <main class="flex-grow-1">
-        <div class="container mt-4">
+        <div class="container-fluid mt-4">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h3>Products</h3>
                 <a href="add_product_form.php" class="btn btn-primary">Add Product</a>

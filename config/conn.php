@@ -27,6 +27,32 @@ function closeConnection($conn) {
     }
 }
 
+
+function convertToWebP($source, $destination, $quality = 80)
+{
+    $info = getimagesize($source);
+    if ($info === false) return false;
+
+    switch ($info['mime']) {
+        case 'image/jpeg':
+            $image = imagecreatefromjpeg($source);
+            break;
+        case 'image/png':
+            $image = imagecreatefrompng($source);
+            break;
+        case 'image/gif':
+            $image = imagecreatefromgif($source);
+            break;
+        default:
+            return false;
+    }
+
+    imagepalettetotruecolor($image);
+    imagealphablending($image, true);
+    imagesavealpha($image, true);
+    return imagewebp($image, $destination, $quality);
+}
+
 // function createDropdown($column_name, $table, $id_field, $name_field, $condition = '')
 // {
 //     global $conn;

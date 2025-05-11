@@ -1,5 +1,5 @@
 <?php 
-include('../../partition/header.php');
+include('../../../partition/header.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $name = $_POST['name'];
@@ -135,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
   </main>
 
-  <?php include('../../partition/footer.php'); ?>
+  <?php include('../../../partition/footer.php'); ?>
 </div>
 
 <script>

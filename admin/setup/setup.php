@@ -37,19 +37,19 @@ include('../partition/header.php');
         <div class="col-md-3">
             <div class="dashboard-card bg-gradient-primary">
                 <i class="bi bi-building card-icon"></i>
-                <h6><a class="text-white" href="../company/company.php">Company</a></h6>
+                <h6><a class="text-white" href="company/company.php">Company</a></h6>
             </div>
         </div>
         <div class="col-md-3">
             <div class="dashboard-card bg-gradient-success">
                 <i class="bi bi-diagram-3 card-icon"></i>
-                <h6><a class="text-white" href="../branch/branch.php">Branch</a></h6>
+                <h6><a class="text-white" href="branch/branch.php">Branch</a></h6>
             </div>
         </div>
         <div class="col-md-3">
             <div class="dashboard-card bg-gradient-warning">
                 <i class="bi bi-geo-alt card-icon"></i>
-                <h6><a class="text-white" href="../location/location.php">Location</a></h6>
+                <h6><a class="text-white" href="location/location.php">Location</a></h6>
             </div>
         </div>
         </div>

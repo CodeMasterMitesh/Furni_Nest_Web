@@ -1,4 +1,4 @@
-<?php include('../partition/header.php'); ?>
+<?php include('../../partition/header.php'); ?>
 <div class="wrapper d-flex flex-column min-vh-100">
     <main class="flex-grow-1">
         <div class="container-fluid mt-4">
@@ -53,7 +53,7 @@
     agGrid.createGrid(eGridDiv, gridOptions);
     
     // Fetch data from PHP (Ajax)
-    fetch('ajax/fetch_company_data.php')
+    fetch('/ajax/fetch_company_data.php')
         .then(response => response.json())
         .then(data => {
             gridOptions.api.setRowData(data);
@@ -72,4 +72,4 @@
     }
 </script>
 
-<?php include('../partition/footer.php'); ?>
+<?php include('../../partition/footer.php'); ?>

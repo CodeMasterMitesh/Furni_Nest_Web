@@ -1,0 +1,1 @@
+<?php include '../comming_soon.php'; ?>
