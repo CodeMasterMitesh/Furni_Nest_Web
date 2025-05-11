@@ -83,7 +83,10 @@ if(!isset($_SESSION['customer_logged_in'])){
                             if($_SESSION['customer_logged_in']){
                                  if(isset($_SESSION['user_id'])){
                                     $user_id = $_SESSION['user_id'];
-                                    $user = getRows("users","id=$user_id");
+                                    $users = getRows("users","id=$user_id","");
+                                    foreach($users as $u){
+                                        $user = $u;
+                                    }
                                     echo '<a href="index.php?p=my-account" class="header-cart">Welcome '.$user['username'].'</a>';
                                 } 
                             }else{

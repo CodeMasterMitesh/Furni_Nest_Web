@@ -19,7 +19,7 @@ if (isset($_POST['login'])) {
     $password = $_POST['password'];
 
     // Using prepared statement
-    $sql = "SELECT * FROM users WHERE username = ?";
+    $sql = "SELECT * FROM users WHERE username = ? and role like '%admin%'";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "s", $username);
     mysqli_stmt_execute($stmt);

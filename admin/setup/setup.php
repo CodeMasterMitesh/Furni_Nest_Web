@@ -52,6 +52,12 @@ include('../partition/header.php');
                 <h6><a class="text-white" href="location/location.php">Location</a></h6>
             </div>
         </div>
+        <div class="col-md-3">
+            <div class="dashboard-card bg-gradient-warning">
+                <i class="bi bi-geo-alt card-icon"></i>
+                <h6><a class="text-white" href="software/software.php">Software</a></h6>
+            </div>
+        </div>
         </div>
 
         </div>

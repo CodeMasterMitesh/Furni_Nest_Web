@@ -66,6 +66,103 @@
 <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $('form.ajax-submit').on('submit', function (e) {
+        e.preventDefault();
 
+        const form = $(this);
+        const submitBtn = form.find('button[type="submit"]');
+        const redirectUrl = form.data('redirect'); // dynamic redirect
+        const formData = new FormData(this);
+        
+        formData.append('csrf_token', '<?php echo $_SESSION['csrf_token']; ?>');
+
+        submitBtn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Saving...');
+
+        $.ajax({
+            url: form.attr('action'),
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            success: function (response) {
+                if (response.status === 'success') {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: response.message,
+                        timer: 2000,
+                        showConfirmButton: false
+                    }).then(() => {
+                        if (redirectUrl) {
+                            window.location.href = redirectUrl;
+                        }
+                    });
+                } else {
+                    Swal.fire('Error', response.message, 'error');
+                }
+            },
+            error: function (xhr) {
+                let msg = "An unexpected error occurred.";
+                try {
+                    const res = JSON.parse(xhr.responseText);
+                    msg = res.message || msg;
+                } catch (e) {}
+                Swal.fire('Request Failed', msg, 'error');
+            },
+            complete: function () {
+                submitBtn.prop('disabled', false).html('<i class="fas fa-save me-2"></i>Save');
+            }
+        });
+    });
+
+
+    // Delete software functionality
+    var deleteId;
+    var deleteTable;
+    $(document).on('click', '.delete-tbdata', function() {
+        deleteId = $(this).data('id');
+        deleteTable = $(this).data('table');
+        var modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+        modal.show();
+    });
+
+    $('#confirmDelete').click(function() {
+        const csrfToken = "<?= $_SESSION['csrf_token'] ?>";
+        $.ajax({
+            url: '../../ajax/deletedb.php',
+            type: 'POST',
+            data: {
+                id: deleteId,
+                table: deleteTable,
+                csrf_token: csrfToken
+            },
+            success: function(response) {
+              console.log(response);
+                if (response.success) {
+                    $('.delete-tbdata[data-id="' + deleteId + '"]').closest('tr').fadeOut(300, function () {
+                        $(this).remove();
+                    });
+                    $('#deleteModal').modal('hide');
+                    $('#toastMessage').html('<i class="fas fa-check-circle me-2"></i>' + response.message);
+                    $('.toast').toast('show');
+                    // Optional: Reload if you want updated state
+                    setTimeout(() => location.reload(), 1000);
+                } else {
+                    $('#deleteModal').modal('hide');
+                    $('#toastMessage').html('<i class="fas fa-exclamation-circle me-2"></i>' + response.message);
+                    $('.toast').toast('show');
+                }
+            },
+            error: function() {
+                $('#toastMessage').html('<i class="fas fa-exclamation-circle me-2"></i>Error communicating with server');
+                $('.toast').toast('show');
+            }
+        });
+    });
+});
+</script>
 </body>
 </html>

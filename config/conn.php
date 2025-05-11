@@ -27,7 +27,6 @@ function closeConnection($conn) {
     }
 }
 
-
 function convertToWebP($source, $destination, $quality = 80)
 {
     $info = getimagesize($source);
@@ -88,13 +87,15 @@ function createDropdown($selectName, $table, $valueField, $displayField, $select
     return $dropdown;
 }
 
-function getRows($table, $condition = '') {
+function getRows($table, $condition = '',$orderby = '') {
     global $conn;
     $query = "SELECT * FROM $table";
     if ($condition != '') {
         $query .= " WHERE $condition";
     }
-
+    if ($orderby != '') {
+        $query .= " $orderby";
+    }
     $result = mysqli_query($conn, $query);
     $data = [];
 
