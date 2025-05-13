@@ -1,53 +1,182 @@
-.dashboard-card {
-    border-radius: 16px;
-    padding: 25px;
-    color: #fff;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
-    position: relative;
-    overflow: hidden;
-    transform: scale(0.95);
-    transition: all 0.3s ease;
-    animation: zoomIn 0.4s ease forwards;
-  }
-
-  .dashboard-card:hover {
-    transform: scale(1.02);
-    box-shadow: 0 25px 40px rgba(0, 0, 0, 0.15);
-  }
-
-  @keyframes zoomIn {
-    from {
-      transform: scale(0.8);
-      opacity: 0;
+:root {
+        --primary: rgba(78, 115, 223, 0.85);
+        --success: rgba(28, 200, 138, 0.85);
+        --info: rgba(54, 185, 204, 0.85);
+        --warning: rgba(246, 194, 62, 0.85);
+        --danger: rgba(231, 74, 59, 0.85);
+        --secondary: rgba(133, 135, 150, 0.85);
+        --dark: rgba(90, 92, 105, 0.85);
+        --light: rgba(248, 249, 252, 0.9);
+        --text-dark: #2d3748;
+        --text-light: #f8f9fc;
     }
-    to {
-      transform: scale(1);
-      opacity: 1;
+    
+    body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #e4e7eb 100%);
+        background-attachment: fixed;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
-  }
+    
+    .dashboard-container {
+        max-width: 1800px;
+        margin: 0 auto;
+    }
+    
+    .dashboard-card {
+        height: 180px;
+        padding: 1.75rem;
+        border-radius: 16px;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        background: linear-gradient(135deg, var(--card-color) 0%, var(--card-color-dark) 100%);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        color: var(--text-light);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .dashboard-card::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+            to bottom right,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.1) 50%,
+            rgba(255, 255, 255, 0) 100%
+        );
+        transform: rotate(45deg);
+        opacity: 0;
+        transition: all 0.6s ease;
+    }
+    
+    .dashboard-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.25);
+    }
+    
+    .dashboard-card:hover::before {
+        opacity: 1;
+        left: 100%;
+    }
+    
+    .dashboard-card h6 {
+        font-size: 1rem;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        opacity: 0.9;
+        letter-spacing: 0.5px;
+    }
+    
+    .dashboard-card .value {
+        font-size: 2rem;
+        font-weight: 700;
+        margin: 0.5rem 0;
+        letter-spacing: 0.5px;
+    }
+    
+    .card-icon {
+        position: absolute;
+        right: 1.5rem;
+        top: 1.5rem;
+        font-size: 3.5rem;
+        opacity: 0.2;
+        transition: all 0.3s ease;
+    }
+    
+    .dashboard-card:hover .card-icon {
+        opacity: 0.3;
+        transform: scale(1.05);
+    }
+    
+    /* Card Color Classes */
+    .card-primary {
+        --card-color: rgba(78, 115, 223, 0.85);
+        --card-color-dark: rgba(34, 74, 190, 0.85);
+    }
+    
+    .card-success {
+        --card-color: rgba(28, 200, 138, 0.85);
+        --card-color-dark: rgba(23, 166, 115, 0.85);
+    }
+    
+    .card-info {
+        --card-color: rgba(54, 185, 204, 0.85);
+        --card-color-dark: rgba(37, 131, 145, 0.85);
+    }
+    
+    .card-warning {
+        --card-color: rgba(246, 194, 62, 0.85);
+        --card-color-dark: rgba(221, 162, 10, 0.85);
+    }
+    
+    .card-danger {
+        --card-color: rgba(231, 74, 59, 0.85);
+        --card-color-dark: rgba(190, 38, 23, 0.85);
+    }
+    
+    .card-secondary {
+        --card-color: rgba(133, 135, 150, 0.85);
+        --card-color-dark: rgba(96, 97, 111, 0.85);
+    }
+    
+    .card-dark {
+        --card-color: rgba(90, 92, 105, 0.85);
+        --card-color-dark: rgba(55, 56, 64, 0.85);
+    }
+    
+    .chart-container {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-radius: 16px;
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        padding: 1.5rem;
+        height: 100%;
+    }
+    
+    .section-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 2rem;
+        position: relative;
+        padding-bottom: 0.75rem;
+    }
+    
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary), var(--info));
+        border-radius: 2px;
+    }
+    
+    @media (max-width: 768px) {
+        .dashboard-card {
+            height: 150px;
+            padding: 1.25rem;
+        }
+        
+        .dashboard-card .value {
+            font-size: 1.75rem;
+        }
+        
+        .card-icon {
+            font-size: 2.75rem;
+        }
+    }
 
-  .dashboard-card h6 {
-    font-size: 1rem;
-    opacity: 0.9;
-    margin-bottom: 5px;
-  }
-
-  .dashboard-card .card-icon {
-    font-size: 2.2rem;
-    opacity: 0.2;
-    position: absolute;
-    top: 15px;
-    right: 20px;
-  }
-
-  .dashboard-card .value {
-    font-size: 1.8rem;
-    font-weight: 600;
-    margin-bottom: 0;
-  }
-
-  .glass-card {
-    backdrop-filter: blur(8px);
-    background: rgba(255, 255, 255, 0.1);
-  }
+  

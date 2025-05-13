@@ -1,69 +1,85 @@
 <?php 
 include('../partition/header.php'); 
 ?>
-<link rel="stylesheet" href="/admin/assets/css/dashboard.css">
-<style>
-    .dashboard-card {
-    height: 150px; /* or any height you want */
-    display: flex;
-    /* flex-direction: column; */
-    justify-content: center;
-    align-items:center;
-    line-height:150px;
-    padding: 1rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-    .card-icon {
-    font-size: 2rem;
-    align-self: flex-start;
-    }
-    .dashboard-card .card-icon{
-        left:50px;
-        top:0px;
-    }
-    .dashboard-card a{
-        text-decoration:none;
-    }
+<!-- Custom CSS -->
+<link rel="stylesheet" href="/admin/assets/css/setup.css">
 
-</style>
 <div class="content">
-<div class="wrapper d-flex flex-column min-vh-100">
-  <main class="flex-grow-1">
-    <div class="container-fluid mt-4">
+    <div class="wrapper d-flex flex-column min-vh-100">
+        <main class="flex-grow-1">
+            <div class="container-fluid setup-dashboard">
+                <h2 class="section-title animate__animated animate__fadeIn">System Setup</h2>
+                
+                <div class="row g-4 mb-4">
+                    <!-- Company Card -->
+                    <div class="col-xl-3 col-md-6 animate__animated animate__fadeIn animate__delay-1s">
+                        <div class="dashboard-card bg-gradient-primary position-relative">
+                            <i class="bi bi-building card-icon"></i>
+                            <h6 class="card-title">Company Setup</h6>
+                            <a class="card-link" href="company/company.php"></a>
+                        </div>
+                    </div>
+                    
+                    <!-- Branch Card -->
+                    <div class="col-xl-3 col-md-6 animate__animated animate__fadeIn animate__delay-2s">
+                        <div class="dashboard-card bg-gradient-success position-relative">
+                            <i class="bi bi-diagram-3 card-icon"></i>
+                            <h6 class="card-title">Branch Management</h6>
+                            <a class="card-link" href="branch/branch.php"></a>
+                        </div>
+                    </div>
+                    
+                    <!-- Location Card -->
+                    <div class="col-xl-3 col-md-6 animate__animated animate__fadeIn animate__delay-3s">
+                        <div class="dashboard-card bg-gradient-info position-relative">
+                            <i class="bi bi-geo-alt card-icon"></i>
+                            <h6 class="card-title">Location Setup</h6>
+                            <a class="card-link" href="location/location.php"></a>
+                        </div>
+                    </div>
+                    
+                    <!-- Software Card -->
+                    <div class="col-xl-3 col-md-6 animate__animated animate__fadeIn animate__delay-4s">
+                        <div class="dashboard-card bg-gradient-warning position-relative">
+                            <i class="bi bi-cpu card-icon"></i>
+                            <h6 class="card-title">Software Configuration</h6>
+                            <a class="card-link" href="software/software.php"></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row g-4">
+                    <!-- Modules Card -->
+                    <div class="col-xl-3 col-md-6 animate__animated animate__fadeIn animate__delay-5s">
+                        <div class="dashboard-card bg-gradient-danger position-relative">
+                            <i class="bi bi-grid-3x3-gap card-icon"></i>
+                            <h6 class="card-title">Modules Setup</h6>
+                            <a class="card-link" href="modules/modules.php"></a>
+                        </div>
+                    </div>
 
-      <!-- First Row -->
-      <div class="row g-4 mb-4">
-        <div class="col-md-3">
-            <div class="dashboard-card bg-gradient-primary">
-                <i class="bi bi-building card-icon"></i>
-                <h6><a class="text-white" href="company/company.php">Company</a></h6>
+                    <div class="col-xl-3 col-md-6 animate__animated animate__fadeIn animate__delay-5s">
+                        <div class="dashboard-card bg-gradient-secondary position-relative">
+                            <i class="bi bi-grid-3x3-gap card-icon"></i>
+                            <h6 class="card-title">Assign Rights</h6>
+                            <a class="card-link" href="assignrights.php"></a>
+                        </div>
+                    </div>
+                    
+                    <!-- Add more cards here as needed -->
+                    <!--
+                    <div class="col-xl-3 col-md-6">
+                        <div class="dashboard-card bg-gradient-secondary position-relative">
+                            <i class="bi bi-gear card-icon"></i>
+                            <h6 class="card-title">System Settings</h6>
+                            <a class="card-link" href="settings/system.php"></a>
+                        </div>
+                    </div>
+                    -->
+                </div>
             </div>
-        </div>
-        <div class="col-md-3">
-            <div class="dashboard-card bg-gradient-success">
-                <i class="bi bi-diagram-3 card-icon"></i>
-                <h6><a class="text-white" href="branch/branch.php">Branch</a></h6>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="dashboard-card bg-gradient-warning">
-                <i class="bi bi-geo-alt card-icon"></i>
-                <h6><a class="text-white" href="location/location.php">Location</a></h6>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="dashboard-card bg-gradient-warning">
-                <i class="bi bi-geo-alt card-icon"></i>
-                <h6><a class="text-white" href="software/software.php">Software</a></h6>
-            </div>
-        </div>
-        </div>
-
-        </div>
-    </main>
+        </main>
     </div>
 </div>
-
 
 <?php include('../partition/footer.php'); ?>

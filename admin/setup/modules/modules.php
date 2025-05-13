@@ -3,38 +3,36 @@
     <main class="flex-grow-1">
         <div class="container-fluid mt-2">
             <div class="d-flex justify-content-between align-items-center mb-1">
-                <h4 class="fw-bold text-primary"><i class="fas fa-tags me-2"></i>Category Management</h4>
-                <?php if (isSuperAdmin() || hasPermission(31, 'add')): ?>
-                    <a href="add_category_form.php" class="btn btn-primary rounded-pill shadow-sm">
-                        <i class="fas fa-plus me-2"></i>Add New Category
-                    </a>
-                <?php endif; ?>
+                <h4 class="fw-bold text-primary"><i class="fas fa-tags me-2"></i>Modules Management</h4>
+                <a href="add_modules.php" class="btn btn-primary rounded-pill shadow-sm">
+                    <i class="fas fa-plus me-2"></i>Add New Modules
+                </a>
             </div>
             
             <div class="card shadow-sm border-0">
                 <div class="card-header bg-white py-2 mb-1">
                     <div class="row align-items-center">
                         <div class="col-md-6">
-                            <h5 class="mb-0"><i class="fas fa-list-alt me-2"></i>Categories List</h5>
+                            <h5 class="mb-0"><i class="fas fa-list-alt me-2"></i>Modules List</h5>
                         </div>
                     </div>
                 </div>
                 <div class="card-body p-0">
-                    <table id="categoriesTable" class="table table-hover align-middle mb-0" style="width:100%">
+                    <table id="modulesTable" class="table table-hover align-middle mb-0" style="width:100%">
                         <thead class="table-light">
                             <tr>
                                 <th class="w-10">ID</th>
-                                <th>Category Name</th>
-                                <th>Description</th>
+                                <th>Modules Name</th>
+                                <th>URL</th>
+                                <th>Icon</th>
                                 <th class="text-center w-15">Status</th>
                                 <th class="text-end w-15">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php 
-                                $sql = "SELECT * FROM categories";
-                                $result = mysqli_query($conn, $sql);
-                                while($row = mysqli_fetch_assoc($result)) {
+                                $rows = getRows("modules","","ORDER BY id desc");
+                                foreach($rows as $row){
                             ?>
                             <tr>
                                 <td class="fw-bold">#<?php echo $row['id']; ?></td>
@@ -49,7 +47,8 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td><?php echo $row['description']; ?></td>
+                                <td><?php echo $row['url']; ?></td>
+                                <td><?php echo $row['icon']; ?></td>
                                 <td class="text-center">
                                     <span class="badge bg-<?php echo ($row['is_active'] ? 'success' : 'secondary'); ?>">
                                         <?php echo ($row['is_active'] ? 'Active' : 'Inactive'); ?>
@@ -57,16 +56,12 @@
                                 </td>
                                 <td class="text-end">
                                     <div class="btn-group" role="group">
-                                        <?php if (isSuperAdmin() || hasPermission(31, 'edit')): ?>
-                                            <a href="edit_category_form.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-outline-primary rounded-start-2">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                        <?php endif; ?>
-                                        <?php if (isSuperAdmin() || hasPermission(31, 'delete')): ?>
-                                        <button class="btn btn-sm btn-outline-danger delete-tbdata rounded-end-2" data-table="categories" data-id="<?php echo $row['id']; ?>">
+                                        <a href="edit_modules.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-outline-primary rounded-start-2">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <button class="btn btn-sm btn-outline-danger delete-tbdata rounded-end-2" data-table="modules" data-id="<?php echo $row['id']; ?>">
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
-                                        <?php endif; ?>
                                         <button class="btn btn-sm btn-outline-secondary toggle-status ms-1 rounded-2" data-id="<?php echo $row['id']; ?>" data-status="<?php echo $row['is_active']; ?>">
                                             <i class="fas fa-power-off"></i>
                                         </button>
@@ -88,15 +83,14 @@
 <script>
 $(document).ready(function() {
     // Initialize DataTable with enhanced features
-    var table = $('#categoriesTable').DataTable({
+    var table = $('#modulesTable').DataTable({
         // dom: "<'row'<'col-sm-12 col-md-6'B><'col-sm-12 col-md-6'f>>" +
         //      "<'row'<'col-sm-12'tr>>" +
         //      "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
-       
         responsive: true,
         language: {
             search: "_INPUT_",
-            searchPlaceholder: "Search categories...",
+            searchPlaceholder: "Search modules...",
             lengthMenu: "Show _MENU_ entries",
             info: "Showing _START_ to _END_ of _TOTAL_ entries",
             paginate: {
@@ -117,15 +111,15 @@ $(document).ready(function() {
     // Toggle status functionality
     $(document).on('click', '.toggle-status', function() {
         var btn = $(this);
-        var categoryId = btn.data('id');
+        var modulesId = btn.data('id');
         var currentStatus = btn.data('status');
         var newStatus = currentStatus == 1 ? 0 : 1;
         
         $.ajax({
-            url: 'toggle_category_status.php',
+            url: 'toggle_modules_status.php',
             type: 'POST',
             data: { 
-                id: categoryId,
+                id: modulesId,
                 status: newStatus
             },
             success: function(response) {

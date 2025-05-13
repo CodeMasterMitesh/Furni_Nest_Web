@@ -9,6 +9,7 @@ if (!isset($_SESSION['admin_logged_in'])) {
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FurniNest Admin Dashboard</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
@@ -38,7 +39,7 @@ if (!isset($_SESSION['admin_logged_in'])) {
 
 </head>
 <body>
-<!-- !-- Navbar -->
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg sticky-top">
   <div class="container-fluid">
     <a class="navbar-brand" href="dashboard.php">FurniNest</a>
@@ -48,9 +49,9 @@ if (!isset($_SESSION['admin_logged_in'])) {
 
     <div class="collapse navbar-collapse" id="navbarMenu">
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
-        <!-- Dashboard (static) -->
+        <!-- Dashboard (always visible) -->
         <li class="nav-item">
-          <a class="nav-link active" href="/admin/dashboard.php"><i class="bi bi-speedometer2"></i>Dashboard</a>
+          <a class="nav-link active" href="/admin/dashboard.php"><i class="bi bi-speedometer2"></i> Dashboard</a>
         </li>
 
         <?php
@@ -59,11 +60,24 @@ if (!isset($_SESSION['admin_logged_in'])) {
         $mainNavResult = mysqli_query($conn, $mainNavQuery);
         
         while ($mainNav = mysqli_fetch_assoc($mainNavResult)) {
-            // Check if this main nav has any modules
+            // Check if user has any permissions in this software section
+            $hasPermissionInSection = false;
             $modulesQuery = "SELECT * FROM modules WHERE sid = {$mainNav['id']} AND parent_id IS NULL ORDER BY sort";
             $modulesResult = mysqli_query($conn, $modulesQuery);
             
-            if (mysqli_num_rows($modulesResult) > 0) {
+            // First pass to check if any modules are accessible
+            $accessibleModules = [];
+            while ($module = mysqli_fetch_assoc($modulesResult)) {
+                if (isSuperAdmin() || isset($_SESSION['user_rights'][$module['id']])) {
+                    $hasPermissionInSection = true;
+                    $accessibleModules[] = $module;
+                }
+            }
+            
+            // Reset pointer for second pass
+            mysqli_data_seek($modulesResult, 0);
+            
+            if ($hasPermissionInSection) {
                 // Main nav item with dropdown
                 echo '<li class="nav-item dropdown">';
                 echo '<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">';
@@ -71,18 +85,26 @@ if (!isset($_SESSION['admin_logged_in'])) {
                 echo '</a>';
                 echo '<ul class="dropdown-menu">';
                 
-                while ($module = mysqli_fetch_assoc($modulesResult)) {
+                // Second pass to build the menu
+                foreach ($accessibleModules as $module) {
                     // Check if this module has sub-modules
                     $subModulesQuery = "SELECT * FROM modules WHERE parent_id = {$module['id']} ORDER BY sort";
                     $subModulesResult = mysqli_query($conn, $subModulesQuery);
                     
-                    if (mysqli_num_rows($subModulesResult) > 0) {
+                    $accessibleSubModules = [];
+                    while ($subModule = mysqli_fetch_assoc($subModulesResult)) {
+                        if (isSuperAdmin() || isset($_SESSION['user_rights'][$subModule['id']])) {
+                            $accessibleSubModules[] = $subModule;
+                        }
+                    }
+                    
+                    if (!empty($accessibleSubModules)) {
                         // Module with sub-dropdown
                         echo '<li class="dropdown-submenu">';
                         echo '<a class="dropdown-item dropdown-toggle"><i class="bi ' . htmlspecialchars($module['icon']) . '"></i> ' . htmlspecialchars($module['name']) . '</a>';
                         echo '<ul class="dropdown-menu">';
                         
-                        while ($subModule = mysqli_fetch_assoc($subModulesResult)) {
+                        foreach ($accessibleSubModules as $subModule) {
                             echo '<li><a class="dropdown-item" href="' . htmlspecialchars($subModule['url']) . '">';
                             echo '<i class="bi ' . htmlspecialchars($subModule['icon']) . '"></i> ' . htmlspecialchars($subModule['name']);
                             echo '</a></li>';
@@ -90,25 +112,21 @@ if (!isset($_SESSION['admin_logged_in'])) {
                         
                         echo '</ul></li>';
                     } else {
-                        // Regular module item
-                        echo '<li><a class="dropdown-item" href="' . htmlspecialchars($module['url']) . '">';
-                        echo '<i class="bi ' . htmlspecialchars($module['icon']) . '"></i> ' . htmlspecialchars($module['name']);
-                        echo '</a></li>';
+                        // Regular module item (only show if user has view permission)
+                        if (isSuperAdmin() || isset($_SESSION['user_rights'][$module['id']])) {
+                            echo '<li><a class="dropdown-item" href="' . htmlspecialchars($module['url']) . '">';
+                            echo '<i class="bi ' . htmlspecialchars($module['icon']) . '"></i> ' . htmlspecialchars($module['name']);
+                            echo '</a></li>';
+                        }
                     }
                 }
                 
                 echo '</ul></li>';
-            } else {
-                // Main nav item without dropdown
-                echo '<li class="nav-item">';
-                echo '<a class="nav-link" href="#">';
-                echo '<i class="bi ' . htmlspecialchars($mainNav['icon']) . '"></i> ' . htmlspecialchars($mainNav['name']);
-                echo '</a></li>';
             }
         }
         ?>
 
-        <!-- Profile (static) -->
+        <!-- Profile (always visible) -->
         <li class="nav-item dropdown ms-3">
           <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="bi bi-person-circle fs-5"></i>
@@ -116,8 +134,12 @@ if (!isset($_SESSION['admin_logged_in'])) {
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
             <li><a class="dropdown-item" href="admin/profile.php"><i class="bi bi-person me-2"></i>Profile</a></li>
-            <li><a class="dropdown-item" href="settings.php"><i class="bi bi-gear me-2"></i>Settings</a></li>
-            <li><a class="dropdown-item" href="/admin/setup/setup.php"><i class="bi bi-gear me-2"></i>Setup</a></li>
+            <?php if (isSuperAdmin() || isset($_SESSION['user_rights']['settings'])): ?>
+              <li><a class="dropdown-item" href="settings.php"><i class="bi bi-gear me-2"></i>Settings</a></li>
+            <?php endif; ?>
+            <?php if (isSuperAdmin()): ?>
+              <li><a class="dropdown-item" href="/admin/setup/setup.php"><i class="bi bi-gear me-2"></i>Setup</a></li>
+            <?php endif; ?>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item text-danger" href="/admin/logout.php"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
           </ul>

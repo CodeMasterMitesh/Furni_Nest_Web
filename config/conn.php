@@ -74,16 +74,17 @@ function convertToWebP($source, $destination, $quality = 80)
 //     return $output;
 // }
 
-function createDropdown($selectName, $table, $valueField, $displayField, $selectedValue = '') {
+function createDropdown($table, $valueField, $displayField, $selectedValue = '') {
     global $conn;
     $query = "SELECT * FROM $table";
     $result = mysqli_query($conn, $query);
-    $dropdown = "<select name='$selectName' class='form-control'>";
+    // $dropdown = "<select name='$selectName' class='form-control rounded-3 py-2'>";
+    // $dropdown.="<option>None</option>";
     while ($row = mysqli_fetch_assoc($result)) {
         $selected = ($row[$valueField] == $selectedValue) ? "selected" : "";
         $dropdown .= "<option value='" . $row[$valueField] . "' $selected>" . $row[$displayField] . "</option>";
     }
-    $dropdown .= "</select>";
+    // $dropdown .= "</select>";
     return $dropdown;
 }
 
@@ -285,5 +286,32 @@ function getOrderStats($conn) {
     }
 
     return $stats;
+}
+function isSuperAdmin() {
+    return ($_SESSION['udata']['role'] ?? '') === 'superadmin';
+}
+
+function hasPermission($moduleId, $action) {
+    // Super admin has all permissions
+    if (isSuperAdmin()) {
+        return true;
+    }
+    
+    // For view permission, check if module exists in rights at all
+    if ($action === 'view') {
+        return isset($_SESSION['user_rights'][$moduleId]);
+    }
+    
+    // For other permissions, check the specific flag
+    if (isset($_SESSION['user_rights'][$moduleId][$action])) {
+        return (bool)$_SESSION['user_rights'][$moduleId][$action];
+    }
+    
+    return false;
+}
+// And add this helper function:
+function hasAnyPermission($moduleId) {
+    if (isSuperAdmin()) return true;
+    return isset($_SESSION['user_rights'][$moduleId]);
 }
 ?>

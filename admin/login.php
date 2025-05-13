@@ -1,5 +1,4 @@
 <?php
-session_start();
 include '../config/conn.php';
 
 // CSRF token generation
@@ -19,7 +18,7 @@ if (isset($_POST['login'])) {
     $password = $_POST['password'];
 
     // Using prepared statement
-    $sql = "SELECT * FROM users WHERE username = ? and role like '%admin%'";
+    $sql = "SELECT * FROM users WHERE username = ?";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "s", $username);
     mysqli_stmt_execute($stmt);
@@ -32,6 +31,27 @@ if (isset($_POST['login'])) {
             $_SESSION['admin_logged_in'] = true;
             $_SESSION['admin_username'] = $row['username'];
             $_SESSION['udata'] = $row;
+            
+            if ($row['role'] !== 'superadmin') {
+                // Fetch user rights from database
+                $rights_sql = "SELECT module_id, can_view, can_add, can_edit, can_delete 
+                FROM user_rights WHERE user_id = ?";
+                $rights_stmt = mysqli_prepare($conn, $rights_sql);
+                mysqli_stmt_bind_param($rights_stmt, "i", $row['id']);
+                mysqli_stmt_execute($rights_stmt);
+                $rights_result = mysqli_stmt_get_result($rights_stmt);
+                
+                // Store rights in session
+                $_SESSION['user_rights'] = [];
+                while ($right = mysqli_fetch_assoc($rights_result)) {
+                    $_SESSION['user_rights'][$right['module_id']] = [
+                        'view' => $right['can_view'],
+                        'add' => $right['can_add'],
+                        'edit' => $right['can_edit'],
+                        'delete' => $right['can_delete']
+                    ];
+                }
+            }
             
             // Update last login
             $update_sql = "UPDATE users SET last_login = NOW() WHERE id = ?";
